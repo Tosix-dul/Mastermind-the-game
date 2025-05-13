@@ -1,5 +1,6 @@
 # Mastermind-the-game
 GRA – PROJEKT
+
 Potrzebne struktury:
 - 6 różnych kolorów kulek
 - 3 małe kulki sygnału ( czarny – gracz nie trafił danej kulki, biały – wskazana przez gracza kulka ma właściwy kolor i pozycję, czerwony – gracz trafił tylko kolor, ale brak pozycji (!!! Jeżeli dany kolor został już trafiony na danej pozycji i nie występuje więcej to nie zwraca czerwonego lecz czarny)  LUB analogiczne różne kształty bądź znaki dla każdego znacznika)
