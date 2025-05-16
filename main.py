@@ -3,11 +3,11 @@ import tkinter.messagebox
 
 
 #konwersja inputu na string cyfr
-def Input_Conv (solution): #niegotowe
+def Input_Conv (answer = []): #gotowe, do zmiany dopiero w sprincie 2.
     len = 4
-    dict = {"kolor1":"1","kolor2":"2","kolor3":"3","kolor4":"4"}
+    dict_color = {"kolor1":"1","kolor2":"2","kolor3":"3","kolor4":"4"}
     answer = [str(input(f"Wpisz {i + 1}. kolor: ")) for i in range(len)] #tymczasowe, potem bedzie podawane jako parametr funkcji
-    # do dodania: wlasiwa konwersja
+    answer = [dict_color[answer[i]] for i in range(len(answer))]
     return answer
 
 
