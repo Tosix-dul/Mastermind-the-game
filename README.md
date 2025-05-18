@@ -48,3 +48,10 @@ Gracz przerywa, jeżeli nie poda poprawnego kodu w limicie prób.
 
 UWAGA
 - Okno gry powinno wyświetlać całość historii obecnej gry, nie tylko ostatnią turę. 
+
+---------------------------------------------------------------------------------------------------------------------
+LISTA ZMIENNYCH GLOBALNYCH (nie używamy polskich znaków i wielkich liter do nazw):
+szukany_kod - kod ustalony randomowo do zgadnięcia
+limit_prob - limit ustawiony w zależności od poziomu
+liczba_prob - numer obecnej próby zgadnięcia kodu, musi być <= limit_prob
+odpowiedz_uzytkownika - kod imputowany przez gracza, który my interpretujemy
