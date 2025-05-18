@@ -55,3 +55,4 @@ szukany_kod - kod ustalony randomowo do zgadnięcia
 limit_prob - limit ustawiony w zależności od poziomu
 liczba_prob - numer obecnej próby zgadnięcia kodu, musi być <= limit_prob
 odpowiedz_uzytkownika - kod imputowany przez gracza, który my interpretujemy
+popr_kod - sprawdzona poprawność kodu (brak koloru, kolor występuje i jest w dobrym miejscu, kolor występuje ale jest w złym miejscu)

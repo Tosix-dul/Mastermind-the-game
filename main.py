@@ -3,24 +3,33 @@ import tkinter.messagebox
 
 
 #konwersja inputu na string cyfr
-def Input_Conv (answer = []): #gotowe, do zmiany dopiero w sprincie 2.
+def Input_Conv (odpowiedz_uzytkownika = []): #gotowe, do zmiany dopiero w sprincie 2.
     len = 4
     dict_color = {"kolor1":"1","kolor2":"2","kolor3":"3","kolor4":"4"}
-    answer = [str(input(f"Wpisz {i + 1}. kolor: ")) for i in range(len)] #tymczasowe, potem bedzie podawane jako parametr funkcji
-    answer = [dict_color[answer[i]] for i in range(len(answer))]
-    return answer
+    odpowiedz_uzytkownika = [str(input(f"Wpisz {i + 1}. kolor: ")) for i in range(len)] #tymczasowe, potem bedzie podawane jako parametr funkcji
+    odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
+    return odpowiedz_uzytkownika
 
-def Is_Correct (conv_answer,solution): #niegotowe
-    corr = ['r' for i in range(len(conv_answer))]
-    mem = [i for i in range(len(conv_answer))]
-    solution_cpy = solution.copy()
-    # sprawdzenie dobrych kolorow
-    for i in range(len(conv_answer)):
-        if solution[i] == conv_answer[i]:
-            corr[i] = 'g'
+
+#sprawdzenie poprawnosci inputu uzytkownika
+def Is_Correct(odpowiedz_uzytkownika, szukany_kod): #gotowe, wazne wstawic input uzytkownika skonwertowany funkcja Input_Conv !!!
+    # w sprint 2. zmienic sposob wyswietlania wyniku
+    popr_kod = ['r' for i in range(len(odpowiedz_uzytkownika))]
+    mem = [i for i in range(len(odpowiedz_uzytkownika))]
+    kod_cpy = szukany_kod.copy()
+    # sprawdzenie dobrych kolorow w dobrym miejscu
+    for i in range(len(odpowiedz_uzytkownika)):
+        if szukany_kod[i] == odpowiedz_uzytkownika[i]:
+            popr_kod[i] = 'g'
             mem.remove(i)
-            solution_cpy.remove(ex[i])
-    return corr
+            kod_cpy.remove(szukany_kod[i])
+    # sprawdzenie dobrych kolorow w zlym miejscu
+    for i in mem:
+        if odpowiedz_uzytkownika[i] in kod_cpy:
+            popr_kod[i] = 'y'
+            kod_cpy.remove(odpowiedz_uzytkownika[i])
+
+    return popr_kod
 
 
 
