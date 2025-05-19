@@ -1,5 +1,6 @@
 import pygame
 import tkinter.messagebox
+import funkcje
 
 
 #konwersja inputu na string cyfr
