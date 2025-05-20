@@ -1,4 +1,7 @@
 import random
+from tkinter import messagebox, font
+import pygame
+
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
 def losuj_kod(dlugosc=4):
@@ -29,3 +32,49 @@ def ograniczona_liczba_prob(limit_prob, szukany_kod, odpowiedz_uzytkownika, licz
             text_surface = font.render(f"Kod: {szukany_kod}", True, WHITE)
             messagebox.showinfo("Przegrana")
     return
+
+#konwersja inputu na string cyfr
+def Input_Conv (odpowiedz_uzytkownika = []): #gotowe, do zmiany dopiero w sprincie 2.
+    len = 4
+    dict_color = {"kolor1":"1","kolor2":"2","kolor3":"3","kolor4":"4"}
+    odpowiedz_uzytkownika = [str(input(f"Wpisz {i + 1}. kolor: ")) for i in range(len)] #tymczasowe, potem bedzie podawane jako parametr funkcji
+    odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
+    return odpowiedz_uzytkownika
+
+
+#sprawdzenie poprawnosci inputu uzytkownika
+def Is_Correct(odpowiedz_uzytkownika, szukany_kod): #gotowe, wazne wstawic input uzytkownika skonwertowany funkcja Input_Conv !!!
+    # w sprint 2. zmienic sposob wyswietlania wyniku
+    popr_kod = ['r' for i in range(len(odpowiedz_uzytkownika))]
+    mem = [i for i in range(len(odpowiedz_uzytkownika))]
+    kod_cpy = szukany_kod.copy()
+    # sprawdzenie dobrych kolorow w dobrym miejscu
+    for i in range(len(odpowiedz_uzytkownika)):
+        if szukany_kod[i] == odpowiedz_uzytkownika[i]:
+            popr_kod[i] = 'g'
+            mem.remove(i)
+            kod_cpy.remove(szukany_kod[i])
+    # sprawdzenie dobrych kolorow w zlym miejscu
+    for i in mem:
+        if odpowiedz_uzytkownika[i] in kod_cpy:
+            popr_kod[i] = 'y'
+            kod_cpy.remove(odpowiedz_uzytkownika[i])
+
+    return popr_kod
+
+class Circ_Pushbutton:
+    def __init__ (self, color, center, radius):
+        self.color = color
+        self.center = center
+        self.radius = radius
+    def draw (self, surface):
+        pygame.draw.circle(surface, self.color, self.center, self.radius);
+    def is_clicked (self,event):
+        mouse_pos = pygame.mouse.get_pos();
+        mouse_button = pygame.mouse.get_pressed();
+        in_circ = pow(self.center[0] - mouse_pos[0],2)+pow(self.center[1] - mouse_pos[1],2)
+        return (in_circ <= pow(self.radius,2) and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1)
+        #ew. dodać zmianę koloru przy najechaniu
+
+
+
