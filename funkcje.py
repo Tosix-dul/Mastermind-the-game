@@ -14,8 +14,8 @@ while running:
             running = False
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
-def losuj_kod(dlugosc=4):
-    return [random.randint(1, 6) for _ in range(dlugosc)]
+def losuj_kod(liczba_kolorow,dlugosc=4):
+    return [random.randint(1,liczba_kolorow) for _ in range(dlugosc)]
 
 #kolor1 to tylko zmienna, która ma być zamieniona na kolor
 slownik_kolorow ={
@@ -44,10 +44,8 @@ def ograniczona_liczba_prob(limit_prob, szukany_kod, odpowiedz_uzytkownika, licz
     return
 
 #konwersja inputu na string cyfr
-def Input_Conv (odpowiedz_uzytkownika = []): #gotowe, do zmiany dopiero w sprincie 2.
-    len = 4
-    dict_color = {"kolor1":"1","kolor2":"2","kolor3":"3","kolor4":"4"}
-    odpowiedz_uzytkownika = [str(input(f"Wpisz {i + 1}. kolor: ")) for i in range(len)] #tymczasowe, potem bedzie podawane jako parametr funkcji
+def Input_Conv (odpowiedz_uzytkownika): #gotowe, do zmiany dopiero w sprincie 2.
+    dict_color = {"Purple":1,"Blue":2,"Green":3,"Orange":4}
     odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
     return odpowiedz_uzytkownika
 
@@ -73,7 +71,8 @@ def Is_Correct(odpowiedz_uzytkownika, szukany_kod): #gotowe, wazne wstawic input
     return popr_kod
 
 class Circ_Pushbutton:
-    def __init__ (self, color, center, radius):
+    def __init__ (self, name, color, center, radius):
+        self.name = name
         self.color = color
         self.center = center
         self.radius = radius
@@ -85,11 +84,13 @@ class Circ_Pushbutton:
         in_circ = pow(self.center[0] - mouse_pos[0],2)+pow(self.center[1] - mouse_pos[1],2)
         return (in_circ <= pow(self.radius,2) and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1)
         #ew. dodać zmianę koloru przy najechaniu
+    def get_name (self):
+        return self.name
 
-    #okno wygranej
-    def winwindow(odpowiedz_uzytkownika, szukany_kod):
-        if odpowiedz_uzytkownika != szukany_kod:
-            win = True
-            tkinter.messagebox.showinfo("WYGRANA")
-            show_popup = False
-            reset_game( )
+#okno wygranej
+def winwindow(odpowiedz_uzytkownika, szukany_kod):
+    if odpowiedz_uzytkownika != szukany_kod:
+        win = True
+        tkinter.messagebox.showinfo("WYGRANA")
+        show_popup = False
+        reset_game( )
