@@ -2,12 +2,22 @@ import random
 from tkinter import messagebox, font
 import pygame
 
+pygame.init()
+running = True
+
+while running:
+    pass
+    window = pygame.display.set_mode((500, 500))
+    pygame.display.set_caption("Mastermind")
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
 def losuj_kod(dlugosc=4):
     return [random.randint(1, 6) for _ in range(dlugosc)]
 
-#kolor1 to tylko zmienna, która ma być zamieniona na kolor  
+#kolor1 to tylko zmienna, która ma być zamieniona na kolor
 slownik_kolorow ={
     1: "kolor1",
     2: "kolor2",
@@ -76,5 +86,10 @@ class Circ_Pushbutton:
         return (in_circ <= pow(self.radius,2) and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1)
         #ew. dodać zmianę koloru przy najechaniu
 
-
-
+    #okno wygranej
+    def winwindow(odpowiedz_uzytkownika, szukany_kod):
+        if odpowiedz_uzytkownika != szukany_kod:
+            win = True
+            tkinter.messagebox.showinfo("WYGRANA")
+            show_popup = False
+            reset_game( )
