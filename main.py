@@ -3,15 +3,18 @@ import tkinter.messagebox
 import funkcje
 
 #definicje
-buttons =[
-    funkcje.Circ_Pushbutton("Purple",(179, 157, 219),(100,450),25),
-    funkcje.Circ_Pushbutton("Blue",(176, 224, 230),(200,450),25),
-    funkcje.Circ_Pushbutton("Green",(197, 219, 174),(300,450),25),
-    funkcje.Circ_Pushbutton("Orange",(250, 199, 192),(400,450),25)]
-odpowiedz_uzytkownika = []
-wylosowany_kod = funkcje.losuj_kod(4)
 window = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Mastermind")
+#przycisk cofniecia
+back_button = pygame.Rect(375,350,50,25)
+buttons =[
+    funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue_ball.png"),
+    funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green_ball.png"),
+    funkcje.Circ_Pushbutton("Orange",25,(300,450),"grafiki/orange_ball.png"),
+    funkcje.Circ_Pushbutton("Purple",25,(400,450),"grafiki/purple_ball.png")]
+odpowiedz_uzytkownika = []
+wylosowany_kod = funkcje.losuj_kod(4)
+
 
 
 
@@ -24,6 +27,7 @@ while running:
     #wyswietlenie przyciskow
     for b in buttons:
         b.draw(window)
+    pygame.draw.rect(window,(255,0,0),back_button)
 
     # sprawdzenie poprawnosci odpowiedzi
     if (len(odpowiedz_uzytkownika) == 4):
@@ -39,6 +43,9 @@ while running:
                 #tymczasowe
                 print("Button:",b.get_name())
                 odpowiedz_uzytkownika.append (b.get_name())
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and back_button.collidepoint(event.pos):
+            if (len(odpowiedz_uzytkownika) > 0):
+                odpowiedz_uzytkownika.pop(-1)
     pygame.display.update()
 #Okno wygranej
     # if guess == answer:
