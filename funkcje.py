@@ -2,16 +2,16 @@ import random
 from tkinter import messagebox, font
 import pygame
 
-pygame.init()
-running = True
-
-while running:
-    pass
-    window = pygame.display.set_mode((500, 500))
-    pygame.display.set_caption("Mastermind")
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+#pygame.init()
+#running = True
+#
+#while running:
+#    pass
+#    window = pygame.display.set_mode((500, 500))
+#    pygame.display.set_caption("Mastermind")
+#    for event in pygame.event.get():
+#        if event.type == pygame.QUIT:
+#            running = False
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
 def losuj_kod(liczba_kolorow,dlugosc=4):
@@ -71,13 +71,13 @@ def Is_Correct(odpowiedz_uzytkownika, szukany_kod): #gotowe, wazne wstawic input
     return popr_kod
 
 class Circ_Pushbutton:
-    def __init__ (self, name, color, center, radius):
+    def __init__ (self, name,radius,center,image_path):
         self.name = name
-        self.color = color
-        self.center = center
         self.radius = radius
+        self.center = center
+        self.image_path = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),(self.radius*2,self.radius*2))
     def draw (self, surface):
-        pygame.draw.circle(surface, self.color, self.center, self.radius);
+        surface.blit(self.image_path, (self.center[0]-self.radius, self.center[1]-self.radius))
     def is_clicked (self,event):
         mouse_pos = pygame.mouse.get_pos();
         mouse_button = pygame.mouse.get_pressed();
