@@ -109,3 +109,16 @@ def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
 def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
     pygame.draw.circle(window,(0,0,0),(100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter),26)
     pygame.draw.circle(window, (211, 211, 211), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
+
+#rysowanie odpowiedzi zwrotnej dla użytkownika - poprawność jego próby
+def draw_feedback(window, feedback, pos, images, spacing=4):
+    x, y = pos
+    current_x = x
+
+    for symbol in feedback:
+        if symbol == 'r':
+            continue  # nie rysujemy i nie przesuwamy pozycji
+        img = images.get(symbol)
+        if img:
+            window.blit(img, (current_x, y))
+            current_x += img.get_width() + spacing
