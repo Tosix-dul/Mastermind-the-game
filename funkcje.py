@@ -81,8 +81,7 @@ class Circ_Pushbutton:
     def draw_as_answer(self,surface,center):
         surface.blit(self.image_path, (center[0]-self.radius, center[1]-self.radius))
     def is_clicked (self,event):
-        mouse_pos = pygame.mouse.get_pos();
-        mouse_button = pygame.mouse.get_pressed();
+        mouse_pos = pygame.mouse.get_pos()
         in_circ = pow(self.center[0] - mouse_pos[0],2)+pow(self.center[1] - mouse_pos[1],2)
         return (in_circ <= pow(self.radius,2) and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1)
         #ew. dodać zmianę koloru przy najechaniu
@@ -109,3 +108,9 @@ def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
 def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
     pygame.draw.circle(window,(0,0,0),(100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter),26)
     pygame.draw.circle(window, (211, 211, 211), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
+
+def draw_button(window,image_path,size,place):
+    drawing = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),size)
+    window.blit(drawing,place)
+    rect = drawing.get_rect(left=place[0], top=place[1])
+    return rect
