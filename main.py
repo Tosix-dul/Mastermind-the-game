@@ -6,6 +6,7 @@ import funkcje
 window = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Mastermind")
 
+
 #obrazki do kulek z odpowiedziami
 black_ball = pygame.image.load('grafiki/black.png')
 white_ball = pygame.image.load('grafiki/white.png')
@@ -20,6 +21,7 @@ feedback_images = {
 #przycisk cofniecia
 back_button = pygame.Rect(375,325,50,25)
 confirm_button = pygame.Rect(375,375,50,25)
+
 buttons =[
     funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue_ball.png"),
     funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green_ball.png"),
@@ -41,8 +43,8 @@ while running:
     #wyswietlenie przyciskow
     for b in buttons:
         b.draw(window)
-    pygame.draw.rect(window,(255,0,0),back_button)
-    pygame.draw.rect(window,(0,255,0),confirm_button)
+    confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (50, 25), (350, 315))
+    delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (50, 25), (350, 350))
 
 
 
@@ -58,12 +60,12 @@ while running:
         #klikniecie jednego z przyciskow
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             #przycisk usuniecia
-            if back_button.collidepoint(event.pos):
+            if delete_rect.collidepoint(event.pos):
                 if (len(odpowiedz_uzytkownika) > 0):
                     funkcje.cancel_answer(window,odpowiedz_uzytkownika,row_counter)
                     odpowiedz_uzytkownika.pop(-1)
             #przycisk zatwierdzenia
-            if confirm_button.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == 4:
+            if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == 4:
                 odpowiedz_uzytkownika = funkcje.Input_Conv(odpowiedz_uzytkownika)
                 print(funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod))
                 
