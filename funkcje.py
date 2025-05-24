@@ -2,16 +2,16 @@ import random
 from tkinter import messagebox, font
 import pygame
 
-pygame.init()
-running = True
-
-while running:
-    pass
-    window = pygame.display.set_mode((500, 500))
-    pygame.display.set_caption("Mastermind")
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+#pygame.init()
+#running = True
+#
+#while running:
+#    pass
+#    window = pygame.display.set_mode((500, 500))
+#    pygame.display.set_caption("Mastermind")
+#    for event in pygame.event.get():
+#        if event.type == pygame.QUIT:
+#            running = False
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
 def losuj_kod(liczba_kolorow,dlugosc=4):
@@ -71,13 +71,15 @@ def Is_Correct(odpowiedz_uzytkownika, szukany_kod): #gotowe, wazne wstawic input
     return popr_kod
 
 class Circ_Pushbutton:
-    def __init__ (self, name, color, center, radius):
+    def __init__ (self, name,radius,center,image_path):
         self.name = name
-        self.color = color
-        self.center = center
         self.radius = radius
+        self.center = center
+        self.image_path = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),(self.radius*2,self.radius*2))
     def draw (self, surface):
-        pygame.draw.circle(surface, self.color, self.center, self.radius);
+        surface.blit(self.image_path, (self.center[0]-self.radius, self.center[1]-self.radius))
+    def draw_as_answer(self,surface,center):
+        surface.blit(self.image_path, (center[0]-self.radius, center[1]-self.radius))
     def is_clicked (self,event):
         mouse_pos = pygame.mouse.get_pos();
         mouse_button = pygame.mouse.get_pressed();
@@ -94,3 +96,16 @@ def winwindow(odpowiedz_uzytkownika, szukany_kod):
         tkinter.messagebox.showinfo("WYGRANA")
         show_popup = False
         reset_game( )
+
+# rysowanie poprzednich strzalow
+def draw_circles (size_of_guess, n0_of_guesses, window):
+    for i in range(n0_of_guesses):
+        for j in range(size_of_guess):
+            pygame.draw.circle(window, (211, 211, 211), (100 + 50 * j, 25 + 50 * i), 24, 1)
+
+def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
+    button.draw_as_answer(window,(100+50*(len(odpowiedz_uzytkownika)-1),25+50*row_counter))
+
+def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
+    pygame.draw.circle(window,(0,0,0),(100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter),26)
+    pygame.draw.circle(window, (211, 211, 211), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
