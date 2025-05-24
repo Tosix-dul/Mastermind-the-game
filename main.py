@@ -5,6 +5,23 @@ import funkcje
 #definicje
 window = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Mastermind")
+
+
+#obrazki do kulek z odpowiedziami
+black_ball = pygame.image.load('grafiki/black.png')
+white_ball = pygame.image.load('grafiki/white.png')
+black_ball = pygame.transform.scale(black_ball, (30, 30))
+white_ball = pygame.transform.scale(white_ball, (30, 30))
+
+feedback_images = {
+    'y': black_ball,
+    'g': white_ball,
+}
+
+#przycisk cofniecia
+back_button = pygame.Rect(375,325,50,25)
+confirm_button = pygame.Rect(375,375,50,25)
+
 buttons =[
     funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue_ball.png"),
     funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green_ball.png"),
@@ -51,6 +68,11 @@ while running:
             if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == 4:
                 odpowiedz_uzytkownika = funkcje.Input_Conv(odpowiedz_uzytkownika)
                 print(funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod))
+                
+                feedback = funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod)
+                feedback_position = (325, 15 + row_counter * 49)
+                funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
+
                 odpowiedz_uzytkownika.clear()
                 row_counter += 1
     pygame.display.update()
