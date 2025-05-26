@@ -92,7 +92,7 @@ while running:
                     funkcje.show_end_screen("win")
                     #won = True
                     #funkcje.show_result_screen(won)
-                    exit
+                    running = False
 
 
                 #przejście do następnej próby
@@ -101,9 +101,9 @@ while running:
         
         #Koniec prób - przegrana
         elif how_many_tries == row_counter:
-            #funkcje.show_end_screen("lose")
-            won = False
-            funkcje.show_result_screen(won)
-            exit
+            funkcje.show_end_screen("lose")
+            #won = False
+            #funkcje.show_result_screen(won)
+            running = False
 
     pygame.display.update()
