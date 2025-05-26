@@ -1,6 +1,9 @@
 import random
 from tkinter import messagebox, font
 import pygame
+import tkinter as tk
+from PIL import Image, ImageTk
+import os
 
 #-----------------Przygotowanie do gry------------------
 
@@ -119,3 +122,44 @@ def win_window(odpowiedz_uzytkownika, szukany_kod):
     tkinter.messagebox.showinfo("WYGRANA")
     show_popup = False
     reset_game( )
+
+#funkcja resetująca grę w razie porażki
+UTTON_IMAGE_PATH = "red-7262301_1280.webp"
+
+def show_result_screen(won=True):
+    def restart_program():
+        print("🔁 Restart programu...")
+        root.destroy()
+        show_result_screen(won=False)  # Możesz tu dać won=True jeśli chcesz
+
+    root = tk.Tk()
+    root.title("Wynik gry")
+    root.geometry("600x400")
+    root.configure(bg="white")
+
+    # Komunikat
+    message = "🎉 Gratulacje, wygrałeś!" if won else "❌ Przegrałeś! Spróbuj jeszcze raz."
+    label = tk.Label(root, text=message, font=("Helvetica", 20), bg="white")
+    label.pack(pady=40)
+
+    # Załaduj obraz jako przycisk
+    try:
+        img = Image.open(BUTTON_IMAGE_PATH)
+        img = img.resize((300, 100), Image.ANTIALIAS)
+        button_image = ImageTk.PhotoImage(img)
+
+        # Przycisk z obrazkiem
+        button = tk.Button(root, image=button_image, command=restart_program, borderwidth=0, highlightthickness=0)
+        button.image = button_image  # trzymamy referencję
+        button.place(relx=0.5, rely=0.6, anchor="center")
+
+        # Nakładany tekst (uwaga: nieklikalny — to tylko dekoracja!)
+        btn_text = tk.Label(root, text="Spróbuj ponownie", font=("Helvetica", 14, "bold"), fg="white", bg="#e84118")
+        btn_text.place(relx=0.5, rely=0.6, anchor="center")
+
+    except Exception as e:
+        print("❌ Błąd ładowania obrazu:", e)
+        # Awaryjny przycisk tekstowy
+        fallback_button = tk.Button(root, text="Spróbuj ponownie", font=("Helvetica", 14, "bold"),
+                                    bg="#e84118", fg="white", command=restart_program)
+        fallback_button.pack(pady=20)
