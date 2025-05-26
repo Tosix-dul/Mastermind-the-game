@@ -87,12 +87,23 @@ while running:
                 feedback_position = (325, 15 + row_counter * 49)
                 funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
 
+                #Użytkownik zgadł kod - wygrana
+                if funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod) == ['w'] * code_length:
+                    funkcje.show_end_screen("win")
+                    #won = True
+                    #funkcje.show_result_screen(won)
+                    exit
+
+
                 #przejście do następnej próby
                 odpowiedz_uzytkownika.clear()
                 row_counter += 1
+        
+        #Koniec prób - przegrana
+        elif how_many_tries == row_counter:
+            #funkcje.show_end_screen("lose")
+            won = False
+            funkcje.show_result_screen(won)
+            exit
 
     pygame.display.update()
-#Okno wygranej
-    # if guess == answer:
-    #    win = True
-    #    tkinter.messagebox.showinfo("WYGRANA")

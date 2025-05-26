@@ -107,23 +107,6 @@ def draw_feedback(window, feedback, pos, images, spacing=4):
 
 #------------------Koniec gry--------------------
 
-#ograniczona_liczba_prob
-# Po jej przekroczeniu bez zgadnięcia - komunikat o przegranej i wypisanie szukanego kodu
-"""Zmienić na komunikat o przegranej"""
-def ograniczona_liczba_prob(limit_prob, szukany_kod, odpowiedz_uzytkownika, liczba_prob=0):
-    if liczba_prob == limit_prob:
-        if odpowiedz_uzytkownika != szukany_kod:
-            text_surface = font.render(f"Kod: {szukany_kod}", True, WHITE)
-            messagebox.showinfo("Przegrana")
-    return
-
-#okno wygranej
-"""DO DOKOŃCZENIA"""
-def win_window(odpowiedz_uzytkownika, szukany_kod):
-    tkinter.messagebox.showinfo("WYGRANA")
-    show_popup = False
-    reset_game( )
-
 #funkcja resetująca grę w razie porażki
 UTTON_IMAGE_PATH = "red-7262301_1280.webp"
 
