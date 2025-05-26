@@ -63,7 +63,7 @@ while running:
         for b in buttons:
             if b.is_clicked(event) and len(odpowiedz_uzytkownika) < 4:
                 odpowiedz_uzytkownika.append (b.get_name())
-                funkcje.d(b,odpowiedz_uzytkownika,row_counter,window)
+                funkcje.draw_answer(b,odpowiedz_uzytkownika,row_counter,window)
 
 
         #klikniecie jednego z przyciskow zatwierdzenia lub usunięcia
