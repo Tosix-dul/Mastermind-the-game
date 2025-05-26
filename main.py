@@ -32,11 +32,13 @@ buttons =[
 
 #przygotowanie do wielokrotnego inputu użytkownika
 odpowiedz_uzytkownika = []
-row_counter = 0 #ilość prób/rzędów
-funkcje.draw_circles(4,8,window) #kółka do wyświetlania prób
+row_counter = 0 #ilość dotychczasowych prób prób/rzędów
+code_length = 4
+how_many_tries = 8
+funkcje.draw_circles(code_length, how_many_tries, window) #kółka do wyświetlania prób
 
 #szukana sekwencja
-wylosowany_kod = funkcje.losuj_kod(4)
+wylosowany_kod = funkcje.losuj_kod(code_length)
 
 
 #-----------------------------Główna pętla programu-------------------------------
