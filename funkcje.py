@@ -4,6 +4,7 @@ import pygame
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
+import sys
 
 #-----------------Przygotowanie do gry------------------
 
@@ -163,3 +164,66 @@ def show_result_screen(won=True):
         fallback_button = tk.Button(root, text="Spróbuj ponownie", font=("Helvetica", 14, "bold"),
                                     bg="#e84118", fg="white", command=restart_program)
         fallback_button.pack(pady=20)
+
+#-----------------------------------------------------------------
+#wyświetla ekran końcowy gry z komunikatem o wygranej lub przegranej
+def show_end_screen(result: str):
+    if result not in ['win', 'lose']:
+        raise ValueError("Użyj: 'win' lub 'lose' jako parametr.")
+
+    # Inicjalizacja Pygame
+    pygame.init()
+    WIDTH, HEIGHT = 600, 400
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Koniec gry")
+
+    # Kolory
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    GREEN = (76, 175, 80)
+    RED = (244, 67, 54)
+    GRAY = (220, 220, 220)
+    DARK_GRAY = (180, 180, 180)
+
+    # Czcionki
+    font_big = pygame.font.SysFont("arial", 40, bold=True)
+    font_small = pygame.font.SysFont("arial", 28)
+
+    # Tekst i tło
+    if result == "win":
+        title = "Wygrałeś, Gratulacje!"
+        bg = GREEN
+    else:
+        title = "Przegrałeś"
+        bg = RED
+
+    # Przycisk
+    button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT - 100, 200, 50)
+
+    running = True
+    while running:
+        screen.fill(bg)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(pygame.mouse.get_pos()):
+                    running = False
+
+        # Tekst główny
+        title_surface = font_big.render(title, True, WHITE)
+        title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 40))
+        screen.blit(title_surface, title_rect)
+
+        # Przycisk
+        mouse_pos = pygame.mouse.get_pos()
+        pygame.draw.rect(screen, DARK_GRAY if button_rect.collidepoint(mouse_pos) else GRAY, button_rect, border_radius=10)
+        button_text = font_small.render("Spróbuj ponownie", True, BLACK)
+        screen.blit(button_text, button_text.get_rect(center=button_rect.center))
+
+        pygame.display.flip()
+        pygame.time.Clock().tick(60)
+
+    pygame.quit()
