@@ -92,8 +92,6 @@ while running:
                 #Użytkownik zgadł kod - wygrana
                 if funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod) == ['w'] * code_length:
                     funkcje.show_end_screen("win",wylosowany_kod_2)
-                    #won = True
-                    #funkcje.show_result_screen(won)
                     running = False
 
 
@@ -104,8 +102,6 @@ while running:
         #Koniec prób - przegrana
         elif how_many_tries == row_counter:
             funkcje.show_end_screen("lose",wylosowany_kod_2)
-            #won = False
-            #funkcje.show_result_screen(won)
             running = False
 
     pygame.display.update()

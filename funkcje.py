@@ -66,6 +66,7 @@ def Input_Conv (odpowiedz_uzytkownika):
     odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
     return odpowiedz_uzytkownika
 
+#konwersja cyfr na nazwy kolorów
 def rev_input_conv(szukany_kod,buttons):
     dict_number = {1:"Purple",2:"Blue",3:"Green",4:"Orange"}
     szukany_kod = [dict_number[szukany_kod[i]] for i in range(len(szukany_kod))]
@@ -113,49 +114,7 @@ def draw_feedback(window, feedback, pos, images, spacing=4):
 
 #------------------Koniec gry--------------------
 
-#funkcja resetująca grę w razie porażki
-UTTON_IMAGE_PATH = "red-7262301_1280.webp"
-
-def show_result_screen(won=True):
-    def restart_program():
-        print("🔁 Restart programu...")
-        root.destroy()
-        show_result_screen(won=False)  # Możesz tu dać won=True jeśli chcesz
-
-    root = tk.Tk()
-    root.title("Wynik gry")
-    root.geometry("600x400")
-    root.configure(bg="white")
-
-    # Komunikat
-    message = "🎉 Gratulacje, wygrałeś!" if won else "❌ Przegrałeś! Spróbuj jeszcze raz."
-    label = tk.Label(root, text=message, font=("Helvetica", 20), bg="white")
-    label.pack(pady=40)
-
-    # Załaduj obraz jako przycisk
-    try:
-        img = Image.open(BUTTON_IMAGE_PATH)
-        img = img.resize((300, 100), Image.ANTIALIAS)
-        button_image = ImageTk.PhotoImage(img)
-
-        # Przycisk z obrazkiem
-        button = tk.Button(root, image=button_image, command=restart_program, borderwidth=0, highlightthickness=0)
-        button.image = button_image  # trzymamy referencję
-        button.place(relx=0.5, rely=0.6, anchor="center")
-
-        # Nakładany tekst (uwaga: nieklikalny — to tylko dekoracja!)
-        btn_text = tk.Label(root, text="Spróbuj ponownie", font=("Helvetica", 14, "bold"), fg="white", bg="#e84118")
-        btn_text.place(relx=0.5, rely=0.6, anchor="center")
-
-    except Exception as e:
-        print("❌ Błąd ładowania obrazu:", e)
-        # Awaryjny przycisk tekstowy
-        fallback_button = tk.Button(root, text="Spróbuj ponownie", font=("Helvetica", 14, "bold"),
-                                    bg="#e84118", fg="white", command=restart_program)
-        fallback_button.pack(pady=20)
-
-#-----------------------------------------------------------------
-#wyświetla ekran końcowy gry z komunikatem o wygranej lub przegranej
+#wyświetla ekran końcowy gry z komunikatem o wygranej lub przegranej i przycisk "Spróbuj ponownie"
 def show_end_screen(result: str,wylosowany_kod):
     if result not in ['win', 'lose']:
         raise ValueError("Użyj: 'win' lub 'lose' jako parametr.")
