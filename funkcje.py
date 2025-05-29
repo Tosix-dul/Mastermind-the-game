@@ -66,6 +66,12 @@ def Input_Conv (odpowiedz_uzytkownika):
     odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
     return odpowiedz_uzytkownika
 
+def rev_input_conv(szukany_kod,buttons):
+    dict_number = {1:"Purple",2:"Blue",3:"Green",4:"Orange"}
+    szukany_kod = [dict_number[szukany_kod[i]] for i in range(len(szukany_kod))]
+    szukany_kod = [button for i in range(len(szukany_kod)) for button in buttons  if button.get_name()==szukany_kod[i]]
+    return szukany_kod
+
 
 #sprawdzenie poprawnosci inputu uzytkownika
 """!!! Wazne wstawic input uzytkownika skonwertowany funkcja Input_Conv !!!"""
@@ -150,7 +156,7 @@ def show_result_screen(won=True):
 
 #-----------------------------------------------------------------
 #wyświetla ekran końcowy gry z komunikatem o wygranej lub przegranej
-def show_end_screen(result: str):
+def show_end_screen(result: str,wylosowany_kod):
     if result not in ['win', 'lose']:
         raise ValueError("Użyj: 'win' lub 'lose' jako parametr.")
 
@@ -205,6 +211,14 @@ def show_end_screen(result: str):
         pygame.draw.rect(screen, DARK_GRAY if button_rect.collidepoint(mouse_pos) else GRAY, button_rect, border_radius=10)
         button_text = font_small.render("Spróbuj ponownie", True, BLACK)
         screen.blit(button_text, button_text.get_rect(center=button_rect.center))
+
+        #Szukany kod
+        text = font_small.render("Prawidłowy kod: ", True, WHITE)
+        for i in range(len(wylosowany_kod)):
+            wylosowany_kod[i].draw_as_answer(screen,(WIDTH // 2 + 50*i , HEIGHT // 2 + 40))
+        screen.blit(text, text.get_rect(center=(WIDTH // 2 - 120, HEIGHT // 2 + 40)))
+
+
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
