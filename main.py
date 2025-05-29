@@ -1,7 +1,8 @@
 import pygame
 import tkinter.messagebox
 import funkcje
-
+import tkinter
+import sys
 #-----------------Definicje-------------------
 
 #okno gry
