@@ -27,7 +27,7 @@ class Circ_Pushbutton:
         self.name = name
         self.radius = radius
         self.center = center
-        self.image_path = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),(self.radius*2,self.radius*2))
+        self.image_path = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),(50,50))
     def draw (self, surface):
         surface.blit(self.image_path, (self.center[0]-self.radius, self.center[1]-self.radius))
     def draw_as_answer(self,surface,center):
@@ -62,13 +62,13 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
 #konwersja inputu na string cyfr
 """DO ZMIANY W SPRINCIE 2"""
 def Input_Conv (odpowiedz_uzytkownika): 
-    dict_color = {"Purple":1,"Blue":2,"Green":3,"Orange":4}
+    dict_color = {"Purple":1,"Blue":2,"Green":3,"Orange":4,"Rainbow":5,"Bubblegum":6,"Yellow":7,"Pink":8}
     odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
     return odpowiedz_uzytkownika
 
 #konwersja cyfr na nazwy kolorów
 def rev_input_conv(szukany_kod,buttons):
-    dict_number = {1:"Purple",2:"Blue",3:"Green",4:"Orange"}
+    dict_number = {1:"Purple",2:"Blue",3:"Green",4:"Orange",5:"Rainbow",6:"Bubblegum",7:"Yellow",8:"Pink"}
     szukany_kod = [dict_number[szukany_kod[i]] for i in range(len(szukany_kod))]
     szukany_kod = [button for i in range(len(szukany_kod)) for button in buttons  if button.get_name()==szukany_kod[i]]
     return szukany_kod

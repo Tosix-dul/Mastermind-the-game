@@ -7,7 +7,7 @@ import sys
 
 #okno gry
 WIDTH = 500
-HEIGHT = 500
+HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mastermind")
 
@@ -30,11 +30,16 @@ feedback_images = {
 back_button = pygame.Rect(375,325,50,25)
 confirm_button = pygame.Rect(375,375,50,25)
 
+#Klawiatura kolorów
 buttons =[
-    funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue_ball.png"),
-    funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green_ball.png"),
-    funkcje.Circ_Pushbutton("Orange",25,(300,450),"grafiki/orange_ball.png"),
-    funkcje.Circ_Pushbutton("Purple",25,(400,450),"grafiki/purple_ball.png")]
+    funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue.png"),
+    funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green.png"),
+    funkcje.Circ_Pushbutton("Orange",25,(300,450),"grafiki/orange.png"),
+    funkcje.Circ_Pushbutton("Rainbow",25,(400,450),"grafiki/rainbow.png"),
+    funkcje.Circ_Pushbutton("Bubblegum",25,(100,550),"grafiki/bubblegum.png"),
+    funkcje.Circ_Pushbutton("Yellow",25,(200,550),"grafiki/yellow.png"),
+    funkcje.Circ_Pushbutton("Pink",25,(300,550),"grafiki/pink.png"),
+    funkcje.Circ_Pushbutton("Purple",25,(400,550),"grafiki/purple.png")]
 
 #przygotowanie do wielokrotnego inputu użytkownika
 odpowiedz_uzytkownika = []
