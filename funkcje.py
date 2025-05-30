@@ -16,7 +16,7 @@ def losuj_kod(liczba_kolorow,dlugosc=4):
 def draw_circles (size_of_guess, n0_of_guesses, window):
     for i in range(n0_of_guesses):
         for j in range(size_of_guess):
-            pygame.draw.circle(window, (211, 211, 211), (100 + 50 * j, 25 + 50 * i), 24, 1)
+            pygame.draw.circle(window, (33, 33, 33), (100 + 50 * j, 25 + 50 * i), 24, 1)
 
 
 #-----------------Input użytkownika------------------
@@ -54,7 +54,7 @@ def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
 #usuwanie pojedynczej odpowiedzi
 def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
     pygame.draw.circle(window,(0,0,0),(100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter),26)
-    pygame.draw.circle(window, (211, 211, 211), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
+    pygame.draw.circle(window, (33, 33, 33), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
 
 
 #-------------------Szukana sekwencja a input użytkownika--------------------------

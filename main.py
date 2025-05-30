@@ -6,9 +6,14 @@ import sys
 #-----------------Definicje-------------------
 
 #okno gry
-window = pygame.display.set_mode((500, 500))
+WIDTH = 500
+HEIGHT = 500
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mastermind")
 
+#Tło
+background_img = pygame.image.load("grafiki/stone_background.jpg")
+background_img = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
 
 #obrazki do kulek z odpowiedziami
 black_ball = pygame.image.load('grafiki/black.png')
@@ -48,6 +53,7 @@ wylosowany_kod_2 = funkcje.rev_input_conv(wylosowany_kod,buttons)
 #Inicjalizacja okna gry
 pygame.init()
 running = True
+window.blit(background_img, (0, 0))
 
 while running:
 
