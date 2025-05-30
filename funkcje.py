@@ -102,10 +102,11 @@ def Is_Correct(odpowiedz_uzytkownika, szukany_kod):
 def draw_feedback(window, feedback, pos, images, spacing=4):
     x, y = pos
     current_x = x
+    random.shuffle(feedback) #kulki z feedbackiem nie są powiązane z konkretnym kolorem
 
     for symbol in feedback:
         if symbol == 'r':
-            continue  # nie rysujemy i nie przesuwamy pozycji
+            continue
         img = images.get(symbol)
         if img:
             window.blit(img, (current_x, y))
