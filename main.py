@@ -6,8 +6,8 @@ import sys
 #-----------------Definicje-------------------
 
 #okno gry
-WIDTH = 500
-HEIGHT = 600
+WIDTH = 600
+HEIGHT = 700
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mastermind")
 
@@ -46,12 +46,10 @@ odpowiedz_uzytkownika = []
 row_counter = 0 #ilość dotychczasowych prób prób/rzędów
 code_length = 4
 how_many_tries = 8
-funkcje.draw_circles(code_length, how_many_tries, window) #kółka do wyświetlania prób
 
 #szukana sekwencja
-wylosowany_kod = funkcje.losuj_kod(code_length)
-wylosowany_kod_2 = funkcje.rev_input_conv(wylosowany_kod,buttons)
-
+wylosowany_kod_numbers = funkcje.losuj_kod(code_length)
+wylosowany_kod_colors = funkcje.rev_input_conv(wylosowany_kod_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
 
@@ -93,15 +91,15 @@ while running:
             #przycisk zatwierdzenia
             if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == 4:
                 odpowiedz_uzytkownika = funkcje.Input_Conv(odpowiedz_uzytkownika)
-                print(funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod))
+                print(funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers))
                 
                 #wyświetlanie feedbacku o poprawności próby zgadnięcia
-                feedback = funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod)
+                feedback = funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers)
                 feedback_position = (325, 15 + row_counter * 49)
                 funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
 
                 #Użytkownik zgadł kod - wygrana
-                if funkcje.Is_Correct(odpowiedz_uzytkownika, wylosowany_kod) == ['w'] * code_length:
+                if funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers) == ['w'] * code_length:
                     funkcje.show_end_screen("win",wylosowany_kod_2)
                     running = False
 

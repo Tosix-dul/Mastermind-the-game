@@ -70,7 +70,7 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
 
 #-------------------Szukana sekwencja a input użytkownika--------------------------
 
-#konwersja inputu na string cyfr
+#konwersja kolorów na string cyfr
 """DO ZMIANY W SPRINCIE 2"""
 def Input_Conv (odpowiedz_uzytkownika): 
     dict_color = {"Purple":1,"Blue":2,"Green":3,"Orange":4,"Rainbow":5,"Bubblegum":6,"Yellow":7,"Pink":8}
