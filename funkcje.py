@@ -2,7 +2,7 @@ import random
 from tkinter import messagebox, font
 import pygame
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import os
 import sys
 
@@ -53,8 +53,19 @@ def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
 
 #usuwanie pojedynczej odpowiedzi
 def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
-    pygame.draw.circle(window,(0,0,0),(100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter),26)
-    pygame.draw.circle(window, (33, 33, 33), (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter), 24, 1)
+    center = (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter)
+    radius = 26
+    background = Image.open("grafiki/stone_background.jpg").convert("RGBA")
+    circle = Image.new("L", background.size, 0)
+    draw = ImageDraw.Draw(circle)
+    left_up = (center[0] - radius, center[1] - radius)
+    right_down = (center[0] + radius, center[1] + radius)
+    draw.ellipse([left_up, right_down], fill=255)
+    overlay = Image.new("RGBA", background.size)
+    overlay.paste(background, (0, 0), mask=circle)
+    result = overlay.crop((left_up[0], left_up[1], right_down[0], right_down[1]))
+    surface = pygame.image.fromstring(result.tobytes(), result.size, result.mode)
+    window.blit(surface,left_up)
 
 
 #-------------------Szukana sekwencja a input użytkownika--------------------------
