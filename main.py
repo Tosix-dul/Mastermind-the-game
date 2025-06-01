@@ -14,13 +14,13 @@ pygame.display.set_caption("Mastermind")
 #przygotowanie do wielokrotnego inputu użytkownika
 odpowiedz_uzytkownika = []
 row_counter = 0 #ilość dotychczasowych prób prób/rzędów
-code_length = 4
-number_of_colors_in_sequence = 4
+codeLength = 4
+numberOfColorsInSequence = 4
 how_many_tries = 8
-number_of_colors_on_keypad = 8
+numberOfColorsOnKeypad = 8
 
 # ustawienia
-diff_settings = funkcje.Difficulty_Settings(code_length, how_many_tries, number_of_colors_in_sequence, number_of_colors_on_keypad)
+diff_settings = funkcje.Difficulty_Settings(codeLength, how_many_tries, numberOfColorsInSequence, numberOfColorsOnKeypad)
 
 #Tło
 background_img = pygame.image.load("grafiki/stone_background.jpg")
@@ -54,7 +54,7 @@ buttons =[
 
 
 #szukana sekwencja
-wylosowany_kod_numbers = funkcje.losuj_kod(number_of_colors_in_sequence, code_length)
+wylosowany_kod_numbers = funkcje.losuj_kod(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
 wylosowany_kod_colors = funkcje.rev_input_conv(wylosowany_kod_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
@@ -105,8 +105,8 @@ while running:
                 funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
 
                 #Użytkownik zgadł kod - wygrana
-                if funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers) == ['w'] * code_length:
-                    funkcje.show_end_screen("win",wylosowany_kod_2)
+                if funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers) == ['w'] * diff_settings.code_length:
+                    funkcje.show_end_screen("win",wylosowany_kod_colors)
                     running = False
 
 
@@ -116,7 +116,7 @@ while running:
         
         #Koniec prób - przegrana
         elif how_many_tries == row_counter:
-            funkcje.show_end_screen("lose",wylosowany_kod_2)
+            funkcje.show_end_screen("lose",wylosowany_kod_colors)
             running = False
 
     pygame.display.update()
