@@ -9,6 +9,7 @@ import sys
 #-----------------Przygotowanie do gry------------------
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
+'''!!konieczna zmiana sposobu losowania żeby dało się regulować ilość kolorów w kodzie!!'''
 def losuj_kod(liczba_kolorow,dlugosc=4):
     return [random.randint(1,liczba_kolorow) for _ in range(dlugosc)]
 
@@ -18,6 +19,55 @@ def draw_circles (size_of_guess, n0_of_guesses, window):
         for j in range(size_of_guess):
             pygame.draw.circle(window, (33, 33, 33), (100 + 50 * j, 25 + 50 * i), 24, 1)
 
+#-------------------------Ustawienia----------------------------
+class Difficulty_Settings:
+    def __init__(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
+        self.code_length = code_length
+        self.how_many_tries = how_many_tries
+        self.number_of_colors_in_sequence = number_of_colors_in_sequence
+        self.number_of_colors_on_keypad = number_of_colors_on_keypad
+        
+
+    #POZIOM ŁATWY
+    # kod długości 4
+    # 6 prób
+    # sekwencja złożona z 4 kolorów
+    # 4 kolory do wyboru, 
+    def easy_mode(self):
+        self.code_length = 4
+        self.how_many_tries = 6
+        self.number_of_colors_in_sequence = 4 #!! regulowanie ilości kolorów w sekwencji dodać osobno w losowaniu!!
+        self.number_of_colors_on_keypad = 4 #!!!reguloawnie ilości kolorów na klawiaturze dodać osobno jako funkcję zewnętrzną!!!
+    
+    #POZIOM ŚREDNI
+    # kod długości 6
+    # 6 prób
+    # sekwencja złożona z 5 kolorów
+    # 6 kolorów do wyboru,
+    def advanced_mode(self):
+        self.code_length = 6
+        self.how_many_tries = 6
+        self.number_of_colors_in_sequence = 5
+        self.number_of_colors_on_keypad = 6
+
+    #POZIOM TRUDNY
+    # kod długości 8
+    # 6 prób
+    # sekwencja złożona z 6 kolorów
+    # 8 kolorów do wyboru,
+    def hard_mode(self):    
+        self.code_length = 6
+        self.how_many_tries = 6
+        self.number_of_colors_in_sequence = 5
+        self.number_of_colors_on_keypad = 6
+
+        
+    def custom_mode(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
+        self.code_length = code_length
+        self.how_many_tries = how_many_tries
+        self.number_of_colors_in_sequence = number_of_colors_in_sequence
+        self.number_of_colors_on_keypad = number_of_colors_on_keypad
+  
 
 #-----------------Input użytkownika------------------
 
