@@ -16,11 +16,11 @@ odpowiedz_uzytkownika = []
 row_counter = 0 #ilość dotychczasowych prób prób/rzędów
 codeLength = 4
 numberOfColorsInSequence = 4
-how_many_tries = 8
+howManyTries = 8
 numberOfColorsOnKeypad = 8
 
 # ustawienia
-diff_settings = funkcje.Difficulty_Settings(codeLength, how_many_tries, numberOfColorsInSequence, numberOfColorsOnKeypad)
+diff_settings = funkcje.Difficulty_Settings(codeLength, howManyTries, numberOfColorsInSequence, numberOfColorsOnKeypad)
 
 #Tło
 background_img = pygame.image.load("grafiki/stone_background.jpg")
@@ -115,7 +115,7 @@ while running:
                 row_counter += 1
         
         #Koniec prób - przegrana
-        elif how_many_tries == row_counter:
+        elif diff_settings.how_many_tries == row_counter:
             funkcje.show_end_screen("lose",wylosowany_kod_colors)
             running = False
 
