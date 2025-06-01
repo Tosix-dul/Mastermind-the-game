@@ -11,6 +11,17 @@ HEIGHT = 700
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mastermind")
 
+#przygotowanie do wielokrotnego inputu użytkownika
+odpowiedz_uzytkownika = []
+row_counter = 0 #ilość dotychczasowych prób prób/rzędów
+code_length = 4
+number_of_colors_in_sequence = 4
+how_many_tries = 8
+number_of_colors_on_keypad = 8
+
+# ustawienia
+diff_settings = funkcje.Difficulty_Settings(code_length, how_many_tries, number_of_colors_in_sequence, number_of_colors_on_keypad)
+
 #Tło
 background_img = pygame.image.load("grafiki/stone_background.jpg")
 background_img = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
@@ -41,14 +52,9 @@ buttons =[
     funkcje.Circ_Pushbutton("Pink",25,(300,550),"grafiki/pink.png"),
     funkcje.Circ_Pushbutton("Purple",25,(400,550),"grafiki/purple.png")]
 
-#przygotowanie do wielokrotnego inputu użytkownika
-odpowiedz_uzytkownika = []
-row_counter = 0 #ilość dotychczasowych prób prób/rzędów
-code_length = 4
-how_many_tries = 8
 
 #szukana sekwencja
-wylosowany_kod_numbers = funkcje.losuj_kod(code_length)
+wylosowany_kod_numbers = funkcje.losuj_kod(number_of_colors_in_sequence, code_length)
 wylosowany_kod_colors = funkcje.rev_input_conv(wylosowany_kod_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
