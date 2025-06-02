@@ -264,45 +264,6 @@ def show_end_screen(result: str,wylosowany_kod):
     else:
         title = "Przegrałeś"
         bg = RED
-        
-#ekran końcowy
-def zagraj_jeszcze_raz():
-    game_over_root.destroy()
-    pokaz_ekran_startowy()
-
-def wyjdz():
-    game_over_root.destroy()
-    sys.exit()
-    
-def pokaz_ekran_koncowy():
-    global game_over_root
-    game_over_root = tk.Tk()
-    game_over_root.title("Koniec Gry")
-    game_over_root.geometry("300x200")
-
-    label = tk.Label(game_over_root, text="Koniec gry!", font=("Arial", 16))
-    label.pack(pady=20)
-
-    tk.Button(game_over_root, text="Zagraj jeszcze raz", command=zagraj_jeszcze_raz, width=25).pack(pady=10)
-    tk.Button(game_over_root, text="Wyjdź", command=wyjdz, width=25).pack(pady=10)
-
-    game_over_root.mainloop()
-
-    
-    # Przycisk
-    button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT - 100, 200, 50)
-    
-    running = True
-    while running:
-        screen.fill(bg)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if button_rect.collidepoint(pygame.mouse.get_pos()):
-                    running = False
 
         # Tekst główny
         title_surface = font_big.render(title, True, WHITE)
