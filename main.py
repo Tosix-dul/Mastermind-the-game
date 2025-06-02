@@ -52,6 +52,8 @@ buttons =[
     funkcje.Circ_Pushbutton("Pink",25,(300,550),"grafiki/pink.png"),
     funkcje.Circ_Pushbutton("Purple",25,(400,550),"grafiki/purple.png")]
 
+#info button
+
 
 #szukana sekwencja
 wylosowany_kod_numbers = funkcje.losuj_kod(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
@@ -71,7 +73,10 @@ while running:
         b.draw(window)
     confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (50, 25), (350, 315))
     delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (50, 25), (350, 350))
-
+    # ostatecznie dodana do menu poczatkowego, dlatego na razie wyjscie z niej powoduje bledy
+    info_circle = pygame.draw.circle(window,(65, 105, 225),(550,50),10)
+    info_text = pygame.font.SysFont("arial",18).render('i',True,(255,255,255))
+    window.blit(info_text,info_text.get_rect(center=(550,50)))
 
     for event in pygame.event.get():
         #wyjście z gry
@@ -87,6 +92,11 @@ while running:
 
         #klikniecie jednego z przyciskow zatwierdzenia lub usunięcia
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+
+            # przycisk info
+            if info_circle.collidepoint(event.pos):
+                funkcje.info_button(window, background_img)
+                window.blit(background_img, (0, 0))
             
             #przycisk usuniecia
             if delete_rect.collidepoint(event.pos):

@@ -19,6 +19,24 @@ def draw_circles (size_of_guess, n0_of_guesses, window):
         for j in range(size_of_guess):
             pygame.draw.circle(window, (33, 33, 33), (100 + 50 * j, 25 + 50 * i), 24, 1)
 
+def info_button (screen,bckg):
+    info_popup = pygame.image.load("grafiki/info.png").convert_alpha()
+    info_popup = pygame.transform.scale(info_popup,(450,650))
+    info_rect = info_popup.get_rect()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or (event.type == pygame.MOUSEBUTTONDOWN and not info_rect.collidepoint(event.pos)):
+                running = False
+
+
+        screen.blit(info_popup, (75, 25))
+
+        pygame.display.flip()
 #-------------------------Ustawienia----------------------------
 class Difficulty_Settings:
     def __init__(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
@@ -67,6 +85,8 @@ class Difficulty_Settings:
         self.how_many_tries = how_many_tries
         self.number_of_colors_in_sequence = number_of_colors_in_sequence
         self.number_of_colors_on_keypad = number_of_colors_on_keypad
+
+
   
 
 #-----------------Input użytkownika------------------
