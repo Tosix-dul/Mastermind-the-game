@@ -9,7 +9,7 @@ def pokaz_ekran_startowy():
 def start_poziom(nr):
     print(f"Uruchamiam poziom {nr}")
     root.destroy()
-    run_game(poziom=nr)
+    rozpocznij_poziom(poziom=nr)
 
 def stworz_poziom():
     messagebox.showinfo("Stwórz poziom", "Tutaj możesz stworzyć swój własny poziom.")
