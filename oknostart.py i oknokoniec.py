@@ -35,3 +35,26 @@ tkinter.Button(root, text="Wyjdź", command=wyjdz, width=25).pack(pady=10)
 
 # Start GUI
 root.mainloop()
+
+-------------------------------------------------------------------------------------
+def zagraj_jeszcze_raz():
+    game_over_root.destroy()
+    pokaz_ekran_startowy()
+
+def wyjdz():
+    game_over_root.destroy()
+    sys.exit()
+    
+def pokaz_ekran_koncowy():
+    global game_over_root
+    game_over_root = tk.Tk()
+    game_over_root.title("Koniec Gry")
+    game_over_root.geometry("300x200")
+
+    label = tk.Label(game_over_root, text="Koniec gry!", font=("Arial", 16))
+    label.pack(pady=20)
+
+    tk.Button(game_over_root, text="Zagraj jeszcze raz", command=zagraj_jeszcze_raz, width=25).pack(pady=10)
+    tk.Button(game_over_root, text="Wyjdź", command=wyjdz, width=25).pack(pady=10)
+
+    game_over_root.mainloop()
