@@ -1,5 +1,11 @@
 #funjcja okna dialogowego; Poziom 1, Poziom 2, Poziom 3, Wyjdź, “Stwórz swój własny poziom”, Customizacja, Zasady gry
 # #Definicje do przycisków
+def pokaz_ekran_startowy():
+    global root
+    root = tk.Tk()
+    root.title("Mastermind")
+    root.geometry("300x400")
+
 def start_poziom(nr):
     print(f"Uruchamiam poziom {nr}")
     root.destroy()
