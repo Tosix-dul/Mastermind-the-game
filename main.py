@@ -37,21 +37,20 @@ feedback_images = {
     'w': white_ball,
 }
 
-#przycisk cofniecia i potwierdzenia
-back_button = pygame.Rect(375,325,50,25)
-confirm_button = pygame.Rect(375,375,50,25)
 
 #Klawiatura kolorów
+#Zakladam min. 4 kolory, jeśli możliwe mniej, zmienic
+posx = WIDTH/((numberOfColorsOnKeypad-1)%4+2)
+rad = 30
 buttons =[
-    funkcje.Circ_Pushbutton("Blue",25,(100,450),"grafiki/blue.png"),
-    funkcje.Circ_Pushbutton("Green",25,(200,450),"grafiki/green.png"),
-    funkcje.Circ_Pushbutton("Orange",25,(300,450),"grafiki/orange.png"),
-    funkcje.Circ_Pushbutton("Rainbow",25,(400,450),"grafiki/rainbow.png"),
-    funkcje.Circ_Pushbutton("Bubblegum",25,(100,550),"grafiki/bubblegum.png"),
-    funkcje.Circ_Pushbutton("Yellow",25,(200,550),"grafiki/yellow.png"),
-    funkcje.Circ_Pushbutton("Pink",25,(300,550),"grafiki/pink.png"),
-    funkcje.Circ_Pushbutton("Purple",25,(400,550),"grafiki/purple.png")]
-
+    funkcje.Circ_Pushbutton("Blue",rad,(120,550),"grafiki/blue.png"),
+    funkcje.Circ_Pushbutton("Green",rad,(2*120,550),"grafiki/green.png"),
+    funkcje.Circ_Pushbutton("Orange",rad,(3*120,550),"grafiki/orange.png"),
+    funkcje.Circ_Pushbutton("Rainbow",rad,(4*120,550),"grafiki/rainbow.png"),
+    funkcje.Circ_Pushbutton("Bubblegum",rad,(posx,650),"grafiki/bubblegum.png"),
+    funkcje.Circ_Pushbutton("Yellow",rad,(2*posx,650),"grafiki/yellow.png"),
+    funkcje.Circ_Pushbutton("Pink",rad,(3*posx,650),"grafiki/pink.png"),
+    funkcje.Circ_Pushbutton("Purple",rad,(4*posx,650),"grafiki/purple.png")]
 #info button
 
 
@@ -69,10 +68,10 @@ window.blit(background_img, (0, 0))
 while running:
 
     #wyswietlenie przyciskow zatwierdzania i cofania odpowiedzi
-    for b in buttons:
-        b.draw(window)
-    confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (50, 25), (350, 315))
-    delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (50, 25), (350, 350))
+    for i in range (0,numberOfColorsOnKeypad):
+        buttons[i].draw(window)
+    confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (70, 35), (500, 425))
+    delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (70, 35), (500, 475))
     # ostatecznie dodana do menu poczatkowego, dlatego na razie wyjscie z niej powoduje bledy
     info_circle = pygame.draw.circle(window,(65, 105, 225),(550,50),10)
     info_text = pygame.font.SysFont("arial",18).render('i',True,(255,255,255))
