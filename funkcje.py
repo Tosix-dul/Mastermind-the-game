@@ -135,11 +135,13 @@ class Circ_Pushbutton:
         self.name = name
         self.radius = radius
         self.center = center
-        self.image_path = pygame.transform.scale((pygame.image.load(image_path).convert_alpha()),(50,50))
+        self.image_path = (pygame.image.load(image_path).convert_alpha())
     def draw (self, surface):
-        surface.blit(self.image_path, (self.center[0]-self.radius, self.center[1]-self.radius))
+        size_adj = pygame.transform.scale(self.image_path, (self.radius*2, self.radius*2))
+        surface.blit(size_adj, (self.center[0]-self.radius, self.center[1]-self.radius))
     def draw_as_answer(self,surface,center):
-        surface.blit(self.image_path, (center[0]-self.radius, center[1]-self.radius))
+        size_adj = pygame.transform.scale(self.image_path, (50,50))
+        surface.blit(size_adj, (center[0]-self.radius, center[1]-self.radius))
     def is_clicked (self,event):
         mouse_pos = pygame.mouse.get_pos()
         in_circ = pow(self.center[0] - mouse_pos[0],2)+pow(self.center[1] - mouse_pos[1],2)
