@@ -1,7 +1,7 @@
 import pygame
 import tkinter.messagebox
 import funkcje
-import tkinter
+import tkinter as tk
 import sys
 #-----------------Definicje-------------------
 
@@ -19,7 +19,7 @@ numberOfColorsInSequence = 4
 howManyTries = 8
 numberOfColorsOnKeypad = 8
 
-# ustawienia
+# ustawienia trudności
 diff_settings = funkcje.Difficulty_Settings(codeLength, howManyTries, numberOfColorsInSequence, numberOfColorsOnKeypad)
 
 #Tło
@@ -59,6 +59,25 @@ wylosowany_kod_numbers = funkcje.losuj_kod(diff_settings.number_of_colors_in_seq
 wylosowany_kod_colors = funkcje.rev_input_conv(wylosowany_kod_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
+
+# Główne okno tkinter
+start_window = tk.Tk()
+start_window.title("Mastermind")
+start_window.geometry("300x400")
+
+# Przyciski
+tk.Button(start_window, text="Poziom Łatwy", command=funkcje.start_poziom(1, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Poziom Średni", command=funkcje.start_poziom(2, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Poziom Trudny", command=funkcje.start_poziom(3, start_window), width=25).pack(pady=5)
+
+tk.Button(start_window, text="Stwórz swój własny poziom", command=funkcje.stworz_poziom, width=25).pack(pady=5)
+tk.Button(start_window, text="Customizacja", command=funkcje.customizacja, width=25).pack(pady=5)
+tk.Button(start_window, text="Zasady gry", command=funkcje.zasady_gry, width=25).pack(pady=5)
+tk.Button(start_window, text="Wyjdź", command=funkcje.wyjdz(start_window), width=25).pack(pady=10)
+
+
+# Start GUI
+start_window.mainloop()
 
 #Inicjalizacja okna gry
 pygame.init()

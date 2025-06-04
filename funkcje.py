@@ -10,17 +10,15 @@ import sys
 
 # Funkcja okna dialogowego; Poziom 1, Poziom 2, Poziom 3, Wyjdź, “Stwórz swój własny poziom”, Customizacja, Zasady gry
 
-# Główne okno tkinter
-start_window = tk.Tk()
-start_window.title("Mastermind")
-start_window.geometry("300x400")
-
-
 # Definicje do przycisków ekranu startowego
-def start_poziom(nr):
-    print(f"Uruchamiam poziom {nr}")
-    start_window.destroy()
-    run_game(poziom=nr)
+def run_level(level_number):
+    
+    pass
+
+def start_poziom(lvl_nr, window):
+    print(f"Uruchamiam poziom {lvl_nr}")
+    window.destroy()
+    run_level(lvl_nr)
 
 def stworz_poziom():
     messagebox.showinfo("Stwórz poziom", "Tutaj możesz stworzyć swój własny poziom.")
@@ -31,22 +29,9 @@ def customizacja():
 def zasady_gry():
     messagebox.showinfo("Zasady gry", "Tutaj znajdują się zasady gry...")
 
-def wyjdz():
-    start_window.destroy()
+def wyjdz(window):
+    window.destroy()
     sys.exit()
-
-# Przyciski
-tk.Button(start_window, text="Poziom 1", command=start_poziom(1), width=25).pack(pady=5)
-tk.Button(start_window, text="Poziom 2", command=start_poziom(2), width=25).pack(pady=5)
-tk.Button(start_window, text="Poziom 3", command=start_poziom(3), width=25).pack(pady=5)
-
-tk.Button(start_window, text="Stwórz swój własny poziom", command=stworz_poziom, width=25).pack(pady=5)
-tk.Button(start_window, text="Customizacja", command=customizacja, width=25).pack(pady=5)
-tk.Button(start_window, text="Zasady gry", command=zasady_gry, width=25).pack(pady=5)
-tk.Button(start_window, text="Wyjdź", command=wyjdz, width=25).pack(pady=10)
-
-# Start GUI
-start_window.mainloop()
 
 
 #-----------------------Okno Poziomu------------------------
@@ -98,7 +83,7 @@ class Difficulty_Settings:
         self.code_length = 4
         self.how_many_tries = 6
         self.number_of_colors_in_sequence = 4 #!! regulowanie ilości kolorów w sekwencji dodać osobno w losowaniu!!
-        self.number_of_colors_on_keypad = 4 #!!!reguloawnie ilości kolorów na klawiaturze dodać osobno jako funkcję zewnętrzną!!!
+        self.number_of_colors_on_keypad = 4
     
     #POZIOM ŚREDNI
     # kod długości 6
