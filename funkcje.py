@@ -81,6 +81,9 @@ def customizacja():
 
 def zasady_gry():
     messagebox.showinfo("Zasady gry", "Tutaj znajdują się zasady gry...")
+    pygame.init()
+    window = pygame.display.set_mode((480, 640))
+    info_button(window)
 
 def wyjdz(window):
     window.destroy()
@@ -91,7 +94,7 @@ def wyjdz(window):
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
 '''!!konieczna zmiana sposobu losowania żeby dało się regulować ilość kolorów w kodzie!!'''
-def losuj_kod(liczba_kolorow,dlugosc=4):
+def losuj_kod(liczba_kolorow,dlugosc):
     return [random.randint(1,liczba_kolorow) for _ in range(dlugosc)]
 
 # rysowanie kółek do wyświetlania obecnych i przyszłych prób użytkownika
@@ -100,22 +103,23 @@ def draw_circles (size_of_guess, n0_of_guesses, window):
         for j in range(size_of_guess):
             pygame.draw.circle(window, (33, 33, 33), (100 + 50 * j, 25 + 50 * i), 24, 1)
 
-def info_button (screen,bckg):
+def info_button (screen):
     info_popup = pygame.image.load("grafiki/info.png").convert_alpha()
-    info_popup = pygame.transform.scale(info_popup,(450,650))
+    info_popup = pygame.transform.scale(info_popup,(480,640))
     info_rect = info_popup.get_rect()
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
 
-            if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or (event.type == pygame.MOUSEBUTTONDOWN and not info_rect.collidepoint(event.pos)):
+            if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or (event.type == pygame.MOUSEBUTTONDOWN and info_rect.collidepoint(event.pos)):
                 running = False
+                pygame.quit()
+                break
 
 
-        screen.blit(info_popup, (75, 25))
+        screen.blit(info_popup, (0,0))
 
         pygame.display.flip()
   
@@ -132,9 +136,10 @@ class Circ_Pushbutton:
     def draw (self, surface):
         size_adj = pygame.transform.scale(self.image_path, (self.radius*2, self.radius*2))
         surface.blit(size_adj, (self.center[0]-self.radius, self.center[1]-self.radius))
-    def draw_as_answer(self,surface,center):
-        size_adj = pygame.transform.scale(self.image_path, (50,50))
-        surface.blit(size_adj, (center[0]-self.radius, center[1]-self.radius))
+    def draw_as_answer(self,surface,center,radius_adj):
+        draw_radius = 25 / radius_adj
+        size_adj = pygame.transform.scale(self.image_path, (2*draw_radius,2*draw_radius))
+        surface.blit(size_adj, (center[0]-draw_radius, center[1]-draw_radius))
     def is_clicked (self,event):
         mouse_pos = pygame.mouse.get_pos()
         in_circ = pow(self.center[0] - mouse_pos[0],2)+pow(self.center[1] - mouse_pos[1],2)
@@ -151,8 +156,8 @@ def draw_button(window,image_path,size,place):
     return rect
 
 #rysowanie pojedynczej odpowiedzi
-def draw_answer (button , odpowiedz_uzytkownika , row_counter, window):
-    button.draw_as_answer(window,(100+50*(len(odpowiedz_uzytkownika)-1),25+50*row_counter))
+def draw_answer (button , odpowiedz_uzytkownika , row_counter, window, code_length):
+    button.draw_as_answer(window,(100+50*(len(odpowiedz_uzytkownika)-1)/((code_length)/4),25+50*row_counter),(code_length)/4)
 
 #usuwanie pojedynczej odpowiedzi
 def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
@@ -168,7 +173,7 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
     overlay.paste(background, (0, 0), mask=circle)
     result = overlay.crop((left_up[0], left_up[1], right_down[0], right_down[1]))
     surface = pygame.image.fromstring(result.tobytes(), result.size, result.mode)
-    window.blit(surface,left_up)
+    window.blit(surface,(left_up[0]-4, left_up[1]-4))
 
 
 #-------------------Szukana sekwencja a input użytkownika--------------------------
@@ -259,7 +264,6 @@ def show_end_screen(result: str,wylosowany_kod):
     else:
         title = "Przegrałeś"
         bg = RED
-
         # Tekst główny
         title_surface = font_big.render(title, True, WHITE)
         title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 40))

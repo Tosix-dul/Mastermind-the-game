@@ -63,15 +63,14 @@ feedback_images = {
 pos_x = WIDTH/((diff_settings.number_of_colors_on_keypad-1)%4+2)
 rad = 30
 buttons =[
-    funkcje.Circ_Pushbutton("Blue",rad,(120,550),"grafiki/blue.png"),
-    funkcje.Circ_Pushbutton("Green",rad,(2*120,550),"grafiki/green.png"),
-    funkcje.Circ_Pushbutton("Orange",rad,(3*120,550),"grafiki/orange.png"),
-    funkcje.Circ_Pushbutton("Rainbow",rad,(4*120,550),"grafiki/rainbow.png"),
-    funkcje.Circ_Pushbutton("Bubblegum",rad,(pos_x,650),"grafiki/bubblegum.png"),
-    funkcje.Circ_Pushbutton("Yellow",rad,(2*pos_x,650),"grafiki/yellow.png"),
-    funkcje.Circ_Pushbutton("Pink",rad,(3*pos_x,650),"grafiki/pink.png"),
-    funkcje.Circ_Pushbutton("Purple",rad,(4*pos_x,650),"grafiki/purple.png")]
-#info button
+    funkcje.Circ_Pushbutton("Purple",rad,(120,550),"grafiki/purple.png"),
+    funkcje.Circ_Pushbutton("Blue",rad,(2*120,550),"grafiki/blue.png"),
+    funkcje.Circ_Pushbutton("Green",rad,(3*120,550),"grafiki/green.png"),
+    funkcje.Circ_Pushbutton("Orange",rad,(4*120,550),"grafiki/orange.png"),
+    funkcje.Circ_Pushbutton("Rainbow",rad,(pos_x,650),"grafiki/rainbow.png"),
+    funkcje.Circ_Pushbutton("Bubblegum",rad,(2*pos_x,650),"grafiki/bubblegum.png"),
+    funkcje.Circ_Pushbutton("Yellow",rad,(3*pos_x,650),"grafiki/yellow.png"),
+    funkcje.Circ_Pushbutton("Pink",rad,(4*pos_x,650),"grafiki/pink.png")]
 
 
 #szukana sekwencja
@@ -93,11 +92,7 @@ while running:
         buttons[i].draw(window)
     confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (70, 35), (500, 425))
     delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (70, 35), (500, 475))
-    
-    # przycisk do wyświetlania zasad - ostatecznie dodana do menu poczatkowego, dlatego na razie wyjscie z niej powoduje bledy
-    info_circle = pygame.draw.circle(window,(65, 105, 225),(550,50),10)
-    info_text = pygame.font.SysFont("arial",18).render('i',True,(255,255,255))
-    window.blit(info_text,info_text.get_rect(center=(550,50)))
+
 
     for event in pygame.event.get():
         #wyjście z gry
@@ -106,19 +101,14 @@ while running:
         
         #klikniecie przycisku na klawiaturze wyboru kolorów
         for b in buttons:
-            if b.is_clicked(event) and len(odpowiedz_uzytkownika) < 4:
+            if b.is_clicked(event) and len(odpowiedz_uzytkownika) < diff_settings.code_length:
                 odpowiedz_uzytkownika.append (b.get_name())
-                funkcje.draw_answer(b,odpowiedz_uzytkownika,row_counter,window)
+                funkcje.draw_answer(b,odpowiedz_uzytkownika,row_counter,window,diff_settings.code_length)
 
 
         #klikniecie jednego z przyciskow zatwierdzenia lub usunięcia
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
 
-            # przycisk info
-            if info_circle.collidepoint(event.pos):
-                funkcje.info_button(window, background_img)
-                window.blit(background_img, (0, 0))
-            
             #przycisk usuniecia
             if delete_rect.collidepoint(event.pos):
                 if (len(odpowiedz_uzytkownika) > 0):
@@ -126,13 +116,13 @@ while running:
                     odpowiedz_uzytkownika.pop(-1)
             
             #przycisk zatwierdzenia
-            if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == 4:
+            if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == diff_settings.code_length:
                 odpowiedz_uzytkownika = funkcje.Input_Conv(odpowiedz_uzytkownika)
                 print(funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers))
                 
                 #wyświetlanie feedbacku o poprawności próby zgadnięcia
                 feedback = funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers)
-                feedback_position = (325, 15 + row_counter * 49)
+                feedback_position = (325 , 15 + row_counter * 49)
                 funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
 
                 #Użytkownik zgadł kod - wygrana
