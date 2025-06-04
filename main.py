@@ -112,7 +112,7 @@ while running:
             #przycisk usuniecia
             if delete_rect.collidepoint(event.pos):
                 if (len(odpowiedz_uzytkownika) > 0):
-                    funkcje.cancel_answer(window,odpowiedz_uzytkownika,row_counter)
+                    funkcje.cancel_answer(window,odpowiedz_uzytkownika,row_counter,diff_settings.code_length)
                     odpowiedz_uzytkownika.pop(-1)
             
             #przycisk zatwierdzenia

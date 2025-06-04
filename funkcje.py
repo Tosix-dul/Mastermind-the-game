@@ -160,9 +160,9 @@ def draw_answer (button , odpowiedz_uzytkownika , row_counter, window, code_leng
     button.draw_as_answer(window,(100+50*(len(odpowiedz_uzytkownika)-1)/((code_length)/4),25+50*row_counter),(code_length)/4)
 
 #usuwanie pojedynczej odpowiedzi
-def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
-    center = (100 + 50 * (len(odpowiedz_uzytkownika)-1), 25 + 50 * row_counter)
-    radius = 26
+def cancel_answer(window, odpowiedz_uzytkownika , row_counter, code_length):
+    center = (100 + 50 * (len(odpowiedz_uzytkownika)-1)/((code_length)/4), 25 + 50 * row_counter)
+    radius = 26/((code_length)/4)
     background = Image.open("grafiki/stone_background.jpg").convert("RGBA")
     circle = Image.new("L", background.size, 0)
     draw = ImageDraw.Draw(circle)
@@ -173,7 +173,7 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter):
     overlay.paste(background, (0, 0), mask=circle)
     result = overlay.crop((left_up[0], left_up[1], right_down[0], right_down[1]))
     surface = pygame.image.fromstring(result.tobytes(), result.size, result.mode)
-    window.blit(surface,(left_up[0]-4, left_up[1]-4))
+    window.blit(surface,(left_up[0], left_up[1]))
 
 
 #-------------------Szukana sekwencja a input użytkownika--------------------------
