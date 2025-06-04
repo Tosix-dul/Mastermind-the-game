@@ -40,17 +40,17 @@ feedback_images = {
 
 #Klawiatura kolorów
 #Zakladam min. 4 kolory, jeśli możliwe mniej, zmienic
-posx = WIDTH/((numberOfColorsOnKeypad-1)%4+2)
+pos_x = WIDTH/((numberOfColorsOnKeypad-1)%4+2)
 rad = 30
 buttons =[
     funkcje.Circ_Pushbutton("Blue",rad,(120,550),"grafiki/blue.png"),
     funkcje.Circ_Pushbutton("Green",rad,(2*120,550),"grafiki/green.png"),
     funkcje.Circ_Pushbutton("Orange",rad,(3*120,550),"grafiki/orange.png"),
     funkcje.Circ_Pushbutton("Rainbow",rad,(4*120,550),"grafiki/rainbow.png"),
-    funkcje.Circ_Pushbutton("Bubblegum",rad,(posx,650),"grafiki/bubblegum.png"),
-    funkcje.Circ_Pushbutton("Yellow",rad,(2*posx,650),"grafiki/yellow.png"),
-    funkcje.Circ_Pushbutton("Pink",rad,(3*posx,650),"grafiki/pink.png"),
-    funkcje.Circ_Pushbutton("Purple",rad,(4*posx,650),"grafiki/purple.png")]
+    funkcje.Circ_Pushbutton("Bubblegum",rad,(pos_x,650),"grafiki/bubblegum.png"),
+    funkcje.Circ_Pushbutton("Yellow",rad,(2*pos_x,650),"grafiki/yellow.png"),
+    funkcje.Circ_Pushbutton("Pink",rad,(3*pos_x,650),"grafiki/pink.png"),
+    funkcje.Circ_Pushbutton("Purple",rad,(4*pos_x,650),"grafiki/purple.png")]
 #info button
 
 
@@ -72,7 +72,8 @@ while running:
         buttons[i].draw(window)
     confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (70, 35), (500, 425))
     delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (70, 35), (500, 475))
-    # ostatecznie dodana do menu poczatkowego, dlatego na razie wyjscie z niej powoduje bledy
+    
+    # przycisk do wyświetlania zasad - ostatecznie dodana do menu poczatkowego, dlatego na razie wyjscie z niej powoduje bledy
     info_circle = pygame.draw.circle(window,(65, 105, 225),(550,50),10)
     info_text = pygame.font.SysFont("arial",18).render('i',True,(255,255,255))
     window.blit(info_text,info_text.get_rect(center=(550,50)))
