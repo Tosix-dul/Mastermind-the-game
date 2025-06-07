@@ -145,8 +145,8 @@ def wyjdz(window):
 #-----------------------Okno Poziomu------------------------
 
 #definicja słłowników do pobierania inputu
-dict_color_to_number = {"Blue":1,"Green":2,"Orange":3,"Rainbow":4,"Bubblegum":5,"Yellow":6,"Pink":7,"Purple":8}
-dict_number_to_color = {1:"Blue",2:"Green",3:"Orange",4:"Rainbow",5:"Bubblegum",6:"Yellow",7:"Pink",8:"Purple",}
+dict_color_to_number = {"Purple":1,"Blue":2,"Green":3,"Orange":4,"Rainbow":5,"Bubblegum":6,"Yellow":7,"Pink":8}
+dict_number_to_color = {1:"Purple", 2:"Blue",3:"Green",4:"Orange",5:"Rainbow",6:"Bubblegum",7:"Yellow",8:"Pink"}
 
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
