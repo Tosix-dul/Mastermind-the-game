@@ -27,7 +27,7 @@ tk.Button(start_window, text="Poziom Łatwy", command=lambda: funkcje.run_level(
 tk.Button(start_window, text="Poziom Średni", command=lambda: funkcje.run_level(2, diff_settings, start_window), width=25).pack(pady=5)
 tk.Button(start_window, text="Poziom Trudny", command=lambda: funkcje.run_level(3, diff_settings, start_window), width=25).pack(pady=5)
 
-tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.stworz_poziom(), width=25).pack(pady=5)
+tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.stworz_poziom(diff_settings, start_window), width=25).pack(pady=5)
 tk.Button(start_window, text="Customizacja", command=lambda: funkcje.customizacja(), width=25).pack(pady=5)
 tk.Button(start_window, text="Zasady gry", command=lambda: funkcje.zasady_gry(), width=25).pack(pady=5)
 tk.Button(start_window, text="Wyjdź", command=lambda: funkcje.wyjdz(start_window), width=25).pack(pady=10)

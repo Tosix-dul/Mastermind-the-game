@@ -49,7 +49,7 @@ class Difficulty_Settings:
         self.number_of_colors_on_keypad = 8
 
         
-    def custom_mode(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
+    def custom_mode(self, code_length: int=4,  how_many_tries: int=4, number_of_colors_in_sequence: int=4, number_of_colors_on_keypad: int=4):
         self.code_length = code_length
         self.how_many_tries = how_many_tries
         self.number_of_colors_in_sequence = number_of_colors_in_sequence
@@ -73,11 +73,63 @@ def run_level(lvl_nr, difficulty: Difficulty_Settings, window):
     
     window.destroy()
 
-def stworz_poziom():
-    messagebox.showinfo("Stwórz poziom", "Tutaj możesz stworzyć swój własny poziom.")
+# Okno do tworzenia poziomu o customowej trudności
+def stworz_poziom(difficulty_settings: Difficulty_Settings, window):
+    window.destroy()
+    custom_diff_window = tk.Tk()
+    custom_diff_window.title("Customise your game!")
+    custom_diff_window.geometry("300x300")
+
+    options = list(range(1,8))
+    str_options = list(map(str, options))
+
+    custom_settings = [4, 4, 4, 4]
+    # Funkcja pobiarająca wybór z opcji wyborów i dodająca go do listy
+    '''Nie uwzględnia możliwości zmiany wyboru przed zatwierdzeniem'''
+    def value(selection): 
+        custom_settings.append(selection)
+
+
+    Code_Length = tk.StringVar(custom_diff_window)
+    Code_Length.set("Code length")
+    Code_Length = tk.OptionMenu(custom_diff_window, Code_Length, *str_options, command=value)
+    Code_Length.pack()
+
+
+    How_Many_Tries = tk.StringVar(custom_diff_window)
+    How_Many_Tries.set("How many tries")
+    How_Many_Tries = tk.OptionMenu(custom_diff_window, How_Many_Tries, *str_options, command=value)
+    How_Many_Tries.pack()
+    
+
+    Number_Of_Colors_In_Sequence = tk.StringVar(custom_diff_window)
+    Number_Of_Colors_In_Sequence.set("Number of colors in sequence")
+
+    #options_colors_in_sequ = list(range(1,int(Code_Length)+1)) # nie można wybrać więcej kolorów w sekwencji niż jej długość
+    #str_options_colors_in_sequ = list(map(str, options_colors_in_sequ))
+
+    Number_Of_Colors_In_Sequence = tk.OptionMenu(custom_diff_window, Number_Of_Colors_In_Sequence, *str_options, command=value)
+    Number_Of_Colors_In_Sequence.pack()
+
+
+    Number_Of_Colors_On_Keypad = tk.StringVar(custom_diff_window)
+    Number_Of_Colors_On_Keypad.set("Number of colors on keypad")
+    Number_Of_Colors_On_Keypad = tk.OptionMenu(custom_diff_window, Number_Of_Colors_On_Keypad, *str_options, command=value)
+    Number_Of_Colors_On_Keypad.pack()
+
+    '''list index out of range coś nie zapisuje się ta lista'''
+    int_custom_settings = list(map(int, custom_settings))
+    tk.Button(custom_diff_window, text="Zatwierdź", command=lambda: difficulty_settings.custom_mode(code_length=int_custom_settings[0], how_many_tries=int_custom_settings[1], 
+                                                                                                    number_of_colors_in_sequence=int_custom_settings[2], 
+                                                                                                    number_of_colors_on_keypad=int_custom_settings[3]), 
+                                                                                                                                                        width=25).pack(pady=8)
+    tk.Button(custom_diff_window, text="Graj", command=lambda: custom_diff_window.destroy(), width=25).pack(pady=8)
+
+    custom_diff_window.mainloop()
+
 
 def customizacja():
-    messagebox.showinfo("Customizacja", "Opcje personalizacji gracza.")
+    messagebox.showinfo("Customizacja", "Opcje personalizacji wyglądu gry.")
 
 def zasady_gry():
     messagebox.showinfo("Zasady gry", "Tutaj znajdują się zasady gry...")
