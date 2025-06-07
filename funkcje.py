@@ -23,7 +23,7 @@ class Difficulty_Settings:
     def easy_mode(self):
         self.code_length = 4
         self.how_many_tries = 6
-        self.number_of_colors_in_sequence = 4 #!! regulowanie ilości kolorów w sekwencji dodać osobno w losowaniu!!
+        self.number_of_colors_in_sequence = 4
         self.number_of_colors_on_keypad = 4
     
     #POZIOM ŚREDNI
@@ -92,10 +92,20 @@ def wyjdz(window):
 
 #-----------------------Okno Poziomu------------------------
 
+#definicja słłowników do pobierania inputu
+dict_color_to_number = {"Blue":1,"Green":2,"Orange":3,"Rainbow":4,"Bubblegum":5,"Yellow":6,"Pink":7,"Purple":8}
+dict_number_to_color = {1:"Blue",2:"Green",3:"Orange",4:"Rainbow",5:"Bubblegum",6:"Yellow",7:"Pink",8:"Purple",}
+
+
 #funkcja losuje kod dla komputera w postaci listy 4 intów
-'''!!konieczna zmiana sposobu losowania żeby dało się regulować ilość kolorów w kodzie!!'''
-def losuj_kod(liczba_kolorow,dlugosc):
-    return [random.randint(1,liczba_kolorow) for _ in range(dlugosc)]
+def losuj_kod(liczba_kolorow, dlugosc=4):
+    kod = list(range(1,liczba_kolorow+1))
+    ile_brakuje = dlugosc - liczba_kolorow
+    if ile_brakuje != 0:
+        kod.extend(random.sample(range(1,liczba_kolorow), ile_brakuje)) #dolosowujemy powtarzające się już kolory do sekwencji żeby długość się zgadzała
+    random.shuffle(kod)
+    return kod
+
 
 # rysowanie kółek do wyświetlania obecnych i przyszłych prób użytkownika
 def draw_circles (size_of_guess, n0_of_guesses, window):
@@ -181,14 +191,12 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter, code_length):
 #konwersja kolorów na string cyfr
 """DO ZMIANY W SPRINCIE 2"""
 def Input_Conv (odpowiedz_uzytkownika): 
-    dict_color = {"Purple":1,"Blue":2,"Green":3,"Orange":4,"Rainbow":5,"Bubblegum":6,"Yellow":7,"Pink":8}
-    odpowiedz_uzytkownika = [dict_color[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
+    odpowiedz_uzytkownika = [dict_color_to_number[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
     return odpowiedz_uzytkownika
 
 #konwersja cyfr na nazwy kolorów
 def rev_input_conv(szukany_kod,buttons):
-    dict_number = {1:"Purple",2:"Blue",3:"Green",4:"Orange",5:"Rainbow",6:"Bubblegum",7:"Yellow",8:"Pink"}
-    szukany_kod = [dict_number[szukany_kod[i]] for i in range(len(szukany_kod))]
+    szukany_kod = [dict_number_to_color[szukany_kod[i]] for i in range(len(szukany_kod))]
     szukany_kod = [button for i in range(len(szukany_kod)) for button in buttons  if button.get_name()==szukany_kod[i]]
     return szukany_kod
 
@@ -196,7 +204,6 @@ def rev_input_conv(szukany_kod,buttons):
 #sprawdzenie poprawnosci inputu uzytkownika
 """!!! Wazne wstawic input uzytkownika skonwertowany funkcja Input_Conv !!!"""
 def Is_Correct(odpowiedz_uzytkownika, szukany_kod): 
-    """w sprint 2. zmienic sposob wyswietlania wyniku"""
     popr_kod = ['r' for i in range(len(odpowiedz_uzytkownika))]
     mem = [i for i in range(len(odpowiedz_uzytkownika))]
     kod_cpy = szukany_kod.copy()
