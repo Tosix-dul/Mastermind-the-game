@@ -1,6 +1,6 @@
 import pygame
 import tkinter.messagebox
-import function
+import funkcje
 import tkinter as tk
 import sys
 
