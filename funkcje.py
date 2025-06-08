@@ -73,38 +73,38 @@ def run_level(lvl_nr, difficulty: Difficulty_Settings, window):
     
     window.destroy()
 
-def stworz_poziom():
+def custom_lvl():
     messagebox.showinfo("Stwórz poziom", "Tutaj możesz stworzyć swój własny poziom.")
 
-def customizacja():
+def custom_deisgn():
     messagebox.showinfo("Customizacja", "Opcje personalizacji gracza.")
 
-def zasady_gry():
+def game_rules():
     messagebox.showinfo("Zasady gry", "Tutaj znajdują się zasady gry...")
     pygame.init()
     window = pygame.display.set_mode((480, 640))
     info_button(window)
 
-def wyjdz(window):
+def leave(window):
     window.destroy()
     sys.exit()
 
 
 #-----------------------Okno Poziomu------------------------
 
-#definicja słłowników do pobierania inputu
+#definicja słowników do pobierania inputu
 dict_color_to_number = {"Purple":1,"Blue":2,"Green":3,"Orange":4,"Rainbow":5,"Bubblegum":6,"Yellow":7,"Pink":8}
 dict_number_to_color = {1:"Purple", 2:"Blue",3:"Green",4:"Orange",5:"Rainbow",6:"Bubblegum",7:"Yellow",8:"Pink"}
 
 
 #funkcja losuje kod dla komputera w postaci listy 4 intów
-def losuj_kod(liczba_kolorow, dlugosc=4):
-    kod = list(range(1,liczba_kolorow+1))
-    ile_brakuje = dlugosc - liczba_kolorow
-    if ile_brakuje != 0:
-        kod.extend(random.sample(range(1,liczba_kolorow), ile_brakuje)) #dolosowujemy powtarzające się już kolory do sekwencji żeby długość się zgadzała
-    random.shuffle(kod)
-    return kod
+def random_code(number_of_colors_in_sequence, code_length=4):
+    code = list(range(1,number_of_colors_in_sequence+1))
+    how_many_missing = code_length - number_of_colors_in_sequence
+    if how_many_missing != 0:
+        code.extend(random.sample(range(1,number_of_colors_in_sequence), how_many_missing)) #dolosowujemy powtarzające się już kolory do sekwencji żeby długość się zgadzała
+    random.shuffle(code)
+    return code
 
 
 # rysowanie kółek do wyświetlania obecnych i przyszłych prób użytkownika
@@ -166,12 +166,12 @@ def draw_button(window,image_path,size,place):
     return rect
 
 #rysowanie pojedynczej odpowiedzi
-def draw_answer (button , odpowiedz_uzytkownika , row_counter, window, code_length):
-    button.draw_as_answer(window,(100+50*(len(odpowiedz_uzytkownika)-1)/((code_length)/4),25+50*row_counter),(code_length)/4)
+def draw_answer (button , user_response , row_counter, window, code_length):
+    button.draw_as_answer(window,(100+50*(len(user_response)-1)/((code_length)/4),25+50*row_counter),(code_length)/4)
 
 #usuwanie pojedynczej odpowiedzi
-def cancel_answer(window, odpowiedz_uzytkownika , row_counter, code_length):
-    center = (100 + 50 * (len(odpowiedz_uzytkownika)-1)/((code_length)/4), 25 + 50 * row_counter)
+def cancel_answer(window, user_response , row_counter, code_length):
+    center = (100 + 50 * (len(user_response)-1)/((code_length)/4), 25 + 50 * row_counter)
     radius = 26/((code_length)/4)
     background = Image.open("grafiki/stone_background.jpg").convert("RGBA")
     circle = Image.new("L", background.size, 0)
@@ -190,38 +190,38 @@ def cancel_answer(window, odpowiedz_uzytkownika , row_counter, code_length):
 
 #konwersja kolorów na string cyfr
 """DO ZMIANY W SPRINCIE 2"""
-def Input_Conv (odpowiedz_uzytkownika): 
-    odpowiedz_uzytkownika = [dict_color_to_number[odpowiedz_uzytkownika[i]] for i in range(len(odpowiedz_uzytkownika))]
-    return odpowiedz_uzytkownika
+def Input_Conv (user_response): 
+    user_response = [dict_color_to_number[user_response[i]] for i in range(len(user_response))]
+    return user_response
 
 #konwersja cyfr na nazwy kolorów
-def rev_input_conv(szukany_kod,buttons):
-    szukany_kod = [dict_number_to_color[szukany_kod[i]] for i in range(len(szukany_kod))]
-    szukany_kod = [button for i in range(len(szukany_kod)) for button in buttons  if button.get_name()==szukany_kod[i]]
-    return szukany_kod
+def rev_input_conv(hidden_code,buttons):
+    hidden_code = [dict_number_to_color[hidden_code[i]] for i in range(len(hidden_code))]
+    hidden_code = [button for i in range(len(hidden_code)) for button in buttons  if button.get_name()==hidden_code[i]]
+    return hidden_code
 
 
 #sprawdzenie poprawnosci inputu uzytkownika
 """!!! Wazne wstawic input uzytkownika skonwertowany funkcja Input_Conv !!!"""
-def Is_Correct(odpowiedz_uzytkownika, szukany_kod): 
-    popr_kod = ['r' for i in range(len(odpowiedz_uzytkownika))]
-    mem = [i for i in range(len(odpowiedz_uzytkownika))]
-    kod_cpy = szukany_kod.copy()
+def Is_Correct(user_response, hidden_code): 
+    proper_code = ['r' for i in range(len(user_response))]
+    mem = [i for i in range(len(user_response))]
+    kod_cpy = hidden_code.copy()
     
     # sprawdzenie dobrych kolorow w dobrym miejscu
-    for i in range(len(odpowiedz_uzytkownika)):
-        if szukany_kod[i] == odpowiedz_uzytkownika[i]:
-            popr_kod[i] = 'w'
+    for i in range(len(user_response)):
+        if hidden_code[i] == user_response[i]:
+            proper_code[i] = 'w'
             mem.remove(i)
-            kod_cpy.remove(szukany_kod[i])
+            kod_cpy.remove(hidden_code[i])
     
     # sprawdzenie dobrych kolorow w zlym miejscu
     for i in mem:
-        if odpowiedz_uzytkownika[i] in kod_cpy:
-            popr_kod[i] = 'b'
-            kod_cpy.remove(odpowiedz_uzytkownika[i])
+        if user_response[i] in kod_cpy:
+            proper_code[i] = 'b'
+            kod_cpy.remove(user_response[i])
 
-    return popr_kod
+    return proper_code
 
 
 #rysowanie odpowiedzi zwrotnej dla użytkownika - poprawność jego próby
@@ -242,7 +242,7 @@ def draw_feedback(window, feedback, pos, images, spacing=4):
 #------------------Koniec gry--------------------
 
 #wyświetla ekran końcowy gry z komunikatem o wygranej lub przegranej i przycisk "Spróbuj ponownie"
-def show_end_screen(result: str,wylosowany_kod):
+def show_end_screen(result: str,hidden_code):
     if result not in ['win', 'lose']:
         raise ValueError("Użyj: 'win' lub 'lose' jako parametr.")
 
@@ -284,8 +284,8 @@ def show_end_screen(result: str,wylosowany_kod):
 
         #Szukany kod
         text = font_small.render("Prawidłowy kod: ", True, WHITE)
-        for i in range(len(wylosowany_kod)):
-            wylosowany_kod[i].draw_as_answer(screen,(WIDTH // 2 + 50*i , HEIGHT // 2 + 40))
+        for i in range(len(hidden_code)):
+            hidden_code[i].draw_as_answer(screen,(WIDTH // 2 + 50*i , HEIGHT // 2 + 40))
         screen.blit(text, text.get_rect(center=(WIDTH // 2 - 120, HEIGHT // 2 + 40)))
 
 
