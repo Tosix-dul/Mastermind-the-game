@@ -1,13 +1,13 @@
 import pygame
 import tkinter.messagebox
-import funkcje
+import function
 import tkinter as tk
 import sys
 
 #-----------------Definicje-------------------
 
 #przygotowanie do wielokrotnego inputu użytkownika
-odpowiedz_uzytkownika = []
+user_response = []
 row_counter = 0 #ilość dotychczasowych prób prób/rzędów
 codeLength = 4
 numberOfColorsInSequence = 4
@@ -15,7 +15,7 @@ howManyTries = 8
 numberOfColorsOnKeypad = 8
 
 # ustawienia trudności
-diff_settings = funkcje.Difficulty_Settings(codeLength, howManyTries, numberOfColorsInSequence, numberOfColorsOnKeypad)
+diff_settings = function.Difficulty_Settings(codeLength, howManyTries, numberOfColorsInSequence, numberOfColorsOnKeypad)
 
 # Okno startowe
 start_window = tk.Tk()
@@ -23,14 +23,15 @@ start_window.title("Mastermind")
 start_window.geometry("300x400")
 
 # Przyciski ekranu startowego
-tk.Button(start_window, text="Poziom Łatwy", command=lambda: funkcje.run_level(1, diff_settings, start_window), width=25).pack(pady=5)
-tk.Button(start_window, text="Poziom Średni", command=lambda: funkcje.run_level(2, diff_settings, start_window), width=25).pack(pady=5)
-tk.Button(start_window, text="Poziom Trudny", command=lambda: funkcje.run_level(3, diff_settings, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Poziom Łatwy", command=lambda: function.run_level(1, diff_settings, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Poziom Średni", command=lambda: function.run_level(2, diff_settings, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Poziom Trudny", command=lambda: function.run_level(3, diff_settings, start_window), width=25).pack(pady=5)
 
 tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.stworz_poziom(diff_settings, start_window), width=25).pack(pady=5)
 tk.Button(start_window, text="Customizacja", command=lambda: funkcje.customizacja(), width=25).pack(pady=5)
 tk.Button(start_window, text="Zasady gry", command=lambda: funkcje.zasady_gry(), width=25).pack(pady=5)
 tk.Button(start_window, text="Wyjdź", command=lambda: funkcje.wyjdz(start_window), width=25).pack(pady=10)
+
 
 # Start GUI
 start_window.mainloop()
@@ -63,19 +64,19 @@ feedback_images = {
 pos_x = WIDTH/((diff_settings.number_of_colors_on_keypad-1)%4+2)
 rad = 30
 buttons =[
-    funkcje.Circ_Pushbutton("Purple",rad,(120,550),"grafiki/purple.png"),
-    funkcje.Circ_Pushbutton("Blue",rad,(2*120,550),"grafiki/blue.png"),
-    funkcje.Circ_Pushbutton("Green",rad,(3*120,550),"grafiki/green.png"),
-    funkcje.Circ_Pushbutton("Orange",rad,(4*120,550),"grafiki/orange.png"),
-    funkcje.Circ_Pushbutton("Rainbow",rad,(pos_x,650),"grafiki/rainbow.png"),
-    funkcje.Circ_Pushbutton("Bubblegum",rad,(2*pos_x,650),"grafiki/bubblegum.png"),
-    funkcje.Circ_Pushbutton("Yellow",rad,(3*pos_x,650),"grafiki/yellow.png"),
-    funkcje.Circ_Pushbutton("Pink",rad,(4*pos_x,650),"grafiki/pink.png")]
+    function.Circ_Pushbutton("Purple",rad,(120,550),"grafiki/purple.png"),
+    function.Circ_Pushbutton("Blue",rad,(2*120,550),"grafiki/blue.png"),
+    function.Circ_Pushbutton("Green",rad,(3*120,550),"grafiki/green.png"),
+    function.Circ_Pushbutton("Orange",rad,(4*120,550),"grafiki/orange.png"),
+    function.Circ_Pushbutton("Rainbow",rad,(pos_x,650),"grafiki/rainbow.png"),
+    function.Circ_Pushbutton("Bubblegum",rad,(2*pos_x,650),"grafiki/bubblegum.png"),
+    function.Circ_Pushbutton("Yellow",rad,(3*pos_x,650),"grafiki/yellow.png"),
+    function.Circ_Pushbutton("Pink",rad,(4*pos_x,650),"grafiki/pink.png")]
 
 
 #szukana sekwencja
-wylosowany_kod_numbers = funkcje.losuj_kod(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
-wylosowany_kod_colors = funkcje.rev_input_conv(wylosowany_kod_numbers,buttons)
+hidden_code_numbers = function.losuj_kod(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
+hidden_code_colors = function.rev_input_conv(hidden_code_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
 
@@ -90,8 +91,8 @@ while running:
     #wyswietlenie przyciskow zatwierdzania i cofania odpowiedzi
     for i in range (0,diff_settings.number_of_colors_on_keypad):
         buttons[i].draw(window)
-    confirm_rect = funkcje.draw_button(window, "grafiki/confirm_button.png", (70, 35), (500, 425))
-    delete_rect = funkcje.draw_button(window, "grafiki/delete_button.png", (70, 35), (500, 475))
+    confirm_rect = function.draw_button(window, "grafiki/confirm_button.png", (70, 35), (500, 425))
+    delete_rect = function.draw_button(window, "grafiki/delete_button.png", (70, 35), (500, 475))
 
 
     for event in pygame.event.get():
@@ -101,9 +102,9 @@ while running:
         
         #klikniecie przycisku na klawiaturze wyboru kolorów
         for b in buttons:
-            if b.is_clicked(event) and len(odpowiedz_uzytkownika) < diff_settings.code_length:
-                odpowiedz_uzytkownika.append (b.get_name())
-                funkcje.draw_answer(b,odpowiedz_uzytkownika,row_counter,window,diff_settings.code_length)
+            if b.is_clicked(event) and len(user_response) < diff_settings.code_length:
+                user_response.append (b.get_name())
+                function.draw_answer(b,user_response,row_counter,window,diff_settings.code_length)
 
 
         #klikniecie jednego z przyciskow zatwierdzenia lub usunięcia
@@ -111,33 +112,33 @@ while running:
 
             #przycisk usuniecia
             if delete_rect.collidepoint(event.pos):
-                if (len(odpowiedz_uzytkownika) > 0):
-                    funkcje.cancel_answer(window,odpowiedz_uzytkownika,row_counter,diff_settings.code_length)
-                    odpowiedz_uzytkownika.pop(-1)
+                if (len(user_response) > 0):
+                    function.cancel_answer(window,user_response,row_counter,diff_settings.code_length)
+                    user_response.pop(-1)
             
             #przycisk zatwierdzenia
-            if confirm_rect.collidepoint(event.pos) and len(odpowiedz_uzytkownika) == diff_settings.code_length:
-                odpowiedz_uzytkownika = funkcje.Input_Conv(odpowiedz_uzytkownika)
-                print(funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers))
+            if confirm_rect.collidepoint(event.pos) and len(user_response) == diff_settings.code_length:
+                user_response = function.Input_Conv(user_response)
+                print(function.Is_Correct(user_response,hidden_code_numbers))
                 
                 #wyświetlanie feedbacku o poprawności próby zgadnięcia
-                feedback = funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers)
+                feedback = function.Is_Correct(user_response,hidden_code_numbers)
                 feedback_position = (325 , 15 + row_counter * 49)
-                funkcje.draw_feedback(window, feedback, feedback_position, feedback_images)
+                function.draw_feedback(window, feedback, feedback_position, feedback_images)
 
                 #Użytkownik zgadł kod - wygrana
-                if funkcje.Is_Correct(odpowiedz_uzytkownika,wylosowany_kod_numbers) == ['w'] * diff_settings.code_length:
-                    funkcje.show_end_screen("win",wylosowany_kod_colors)
+                if function.Is_Correct(user_response,hidden_code_numbers) == ['w'] * diff_settings.code_length:
+                    function.show_end_screen("win",hidden_code_colors)
                     running = False
 
 
                 #przejście do następnej próby
-                odpowiedz_uzytkownika.clear()
+                user_response.clear()
                 row_counter += 1
         
         #Koniec prób - przegrana
         elif diff_settings.how_many_tries == row_counter:
-            funkcje.show_end_screen("lose",wylosowany_kod_colors)
+            function.show_end_screen("lose",hidden_code_colors)
             running = False
 
     pygame.display.update()
