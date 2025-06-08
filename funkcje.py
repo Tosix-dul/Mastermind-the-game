@@ -49,7 +49,7 @@ class Difficulty_Settings:
         self.number_of_colors_on_keypad = 8
 
         
-    def custom_mode(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
+    def custom_mode(self, code_length: int=4,  how_many_tries: int=4, number_of_colors_in_sequence: int=4, number_of_colors_on_keypad: int=4):
         self.code_length = code_length
         self.how_many_tries = how_many_tries
         self.number_of_colors_in_sequence = number_of_colors_in_sequence
@@ -73,11 +73,85 @@ def run_level(lvl_nr, difficulty: Difficulty_Settings, window):
     
     window.destroy()
 
-def custom_lvl():
-    messagebox.showinfo("Stwórz poziom", "Tutaj możesz stworzyć swój własny poziom.")
+# Okno do tworzenia poziomu o customowej trudności
+def stworz_poziom(difficulty_settings: Difficulty_Settings, window):
+    window.destroy()
+    custom_diff_window = tk.Tk()
+    custom_diff_window.title("Customise your game!")
+    custom_diff_window.geometry("300x300")
+
+    options = list(range(1,8))
+    str_options = list(map(str, options))
+
+    custom_settings = {"code_length": 4, "how_many_tries": 4, "number_of_colors_in_sequence": 4, "number_of_colors_on_keypad": 4}
+    
+    
+    # Funkcje pobiarające wybór z opcji wyborów i dodająca go do listy ustawień
+
+    def valueCL(selection): 
+        custom_settings["code_length"] = int(selection)
+
+        # Możliwość wyboru ilości kolorów w sekwencji dostępna dopiero po wybraniu długości sekwencji    
+        L3 = tk.Label(custom_diff_window, text="The number of colors in hidden code")
+        L3.pack()
+        Number_Of_Colors_In_Sequence = tk.StringVar(custom_diff_window)
+        Number_Of_Colors_In_Sequence.set("Number of colors in sequence")
+
+        options_colors_in_sequ = list(range(1,int(selection)+1)) # nie można wybrać więcej kolorów w sekwencji niż jej długość
+        str_options_colors_in_sequ = list(map(str, options_colors_in_sequ))
+
+        Number_Of_Colors_In_Sequence = tk.OptionMenu(custom_diff_window, Number_Of_Colors_In_Sequence, *str_options_colors_in_sequ, command=valueNCS)
+        Number_Of_Colors_In_Sequence.pack()
+
+    def valueHMT(selection): 
+        custom_settings["how_many_tries"] = int(selection)
+
+    def valueNCS(selection): 
+        custom_settings["number_of_colors_in_sequence"] = int(selection)
+
+        # Możliwość wyboru ilości kolorów na klawiaturze dostępna dopiero po wybraniu ilości kolorów w sekwencji
+        L4 = tk.Label(custom_diff_window, text="The number of colors on keypad")
+        L4.pack()
+        Number_Of_Colors_On_Keypad = tk.StringVar(custom_diff_window)
+        Number_Of_Colors_On_Keypad.set("Number of colors on keypad")
+
+        options_colors_on_keyp = list(range(int(selection), 9)) # nie można wybrać mniej kolorów na klawiaturze niż jest w sekwencji
+        str_options_colors_on_keyp = list(map(str, options_colors_on_keyp))
+
+        Number_Of_Colors_On_Keypad = tk.OptionMenu(custom_diff_window, Number_Of_Colors_On_Keypad, *str_options_colors_on_keyp, command=valueNCK)
+        Number_Of_Colors_On_Keypad.pack()
+    
+    def valueNCK(selection): 
+        custom_settings["number_of_colors_on_keypad"] = int(selection)
+
+
+    L1 = tk.Label(custom_diff_window, text="The length of the hidden code")
+    L1.pack()
+    Code_Length = tk.StringVar(custom_diff_window)
+    Code_Length.set("Code length")
+    Code_Length = tk.OptionMenu(custom_diff_window, Code_Length, *str_options, command=valueCL)
+    Code_Length.pack()
+
+    L2 = tk.Label(custom_diff_window, text="The number of tries")
+    L2.pack()
+    How_Many_Tries = tk.StringVar(custom_diff_window)
+    How_Many_Tries.set("How many tries")
+    How_Many_Tries = tk.OptionMenu(custom_diff_window, How_Many_Tries, *str_options, command=valueHMT)
+    How_Many_Tries.pack()
+
+
+    tk.Button(custom_diff_window, text="Zatwierdź", command=lambda: difficulty_settings.custom_mode(code_length=custom_settings["code_length"], how_many_tries=custom_settings["how_many_tries"], 
+                                                                                                    number_of_colors_in_sequence=custom_settings["number_of_colors_in_sequence"], 
+                                                                                                    number_of_colors_on_keypad=custom_settings["number_of_colors_on_keypad"]), 
+                                                                                                                                                        width=25).pack(pady=8)
+    tk.Button(custom_diff_window, text="Graj", command=lambda: custom_diff_window.destroy(), width=25).pack(pady=8)
+
+    custom_diff_window.mainloop()
+
 
 def custom_deisgn():
     messagebox.showinfo("Customizacja", "Opcje personalizacji gracza.")
+
 
 def game_rules():
     messagebox.showinfo("Zasady gry", "Tutaj znajdują się zasady gry...")
@@ -101,10 +175,11 @@ dict_number_to_color = {1:"Purple", 2:"Blue",3:"Green",4:"Orange",5:"Rainbow",6:
 def random_code(number_of_colors_in_sequence, code_length=4):
     code = list(range(1,number_of_colors_in_sequence+1))
     how_many_missing = code_length - number_of_colors_in_sequence
-    if how_many_missing != 0:
-        code.extend(random.sample(range(1,number_of_colors_in_sequence), how_many_missing)) #dolosowujemy powtarzające się już kolory do sekwencji żeby długość się zgadzała
+    for i in range(how_many_missing, 0, -1):
+        code.append(random.randint(1,number_of_colors_in_sequence)) #dolosowujemy powtarzające się już kolory do sekwencji żeby długość się zgadzała
     random.shuffle(code)
     return code
+
 
 
 # rysowanie kółek do wyświetlania obecnych i przyszłych prób użytkownika

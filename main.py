@@ -27,10 +27,11 @@ tk.Button(start_window, text="Poziom Łatwy", command=lambda: function.run_level
 tk.Button(start_window, text="Poziom Średni", command=lambda: function.run_level(2, diff_settings, start_window), width=25).pack(pady=5)
 tk.Button(start_window, text="Poziom Trudny", command=lambda: function.run_level(3, diff_settings, start_window), width=25).pack(pady=5)
 
-tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: function.stworz_poziom(), width=25).pack(pady=5)
-tk.Button(start_window, text="Customizacja", command=lambda: function.customizacja(), width=25).pack(pady=5)
-tk.Button(start_window, text="Zasady gry", command=lambda: function.zasady_gry(), width=25).pack(pady=5)
-tk.Button(start_window, text="Wyjdź", command=lambda: function.wyjdz(start_window), width=25).pack(pady=10)
+tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.stworz_poziom(diff_settings, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Customizacja", command=lambda: funkcje.customizacja(), width=25).pack(pady=5)
+tk.Button(start_window, text="Zasady gry", command=lambda: funkcje.zasady_gry(), width=25).pack(pady=5)
+tk.Button(start_window, text="Wyjdź", command=lambda: funkcje.wyjdz(start_window), width=25).pack(pady=10)
+
 
 # Start GUI
 start_window.mainloop()
