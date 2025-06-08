@@ -206,20 +206,20 @@ def rev_input_conv(hidden_code,buttons):
 def Is_Correct(user_response, hidden_code): 
     proper_code = ['r' for i in range(len(user_response))]
     mem = [i for i in range(len(user_response))]
-    kod_cpy = hidden_code.copy()
+    hidden_code_copy = hidden_code.copy()
     
     # sprawdzenie dobrych kolorow w dobrym miejscu
     for i in range(len(user_response)):
         if hidden_code[i] == user_response[i]:
             proper_code[i] = 'w'
             mem.remove(i)
-            kod_cpy.remove(hidden_code[i])
+            hidden_code_copy.remove(hidden_code[i])
     
     # sprawdzenie dobrych kolorow w zlym miejscu
     for i in mem:
-        if user_response[i] in kod_cpy:
+        if user_response[i] in hidden_code_copy:
             proper_code[i] = 'b'
-            kod_cpy.remove(user_response[i])
+            hidden_code_copy.remove(user_response[i])
 
     return proper_code
 
