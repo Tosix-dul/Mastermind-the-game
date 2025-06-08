@@ -74,7 +74,7 @@ def run_level(lvl_nr, difficulty: Difficulty_Settings, window):
     window.destroy()
 
 # Okno do tworzenia poziomu o customowej trudności
-def stworz_poziom(difficulty_settings: Difficulty_Settings, window):
+def custom_level(difficulty_settings: Difficulty_Settings, window):
     window.destroy()
     custom_diff_window = tk.Tk()
     custom_diff_window.title("Customise your game!")
@@ -149,7 +149,7 @@ def stworz_poziom(difficulty_settings: Difficulty_Settings, window):
     custom_diff_window.mainloop()
 
 
-def custom_deisgn():
+def custom_design():
     messagebox.showinfo("Customizacja", "Opcje personalizacji gracza.")
 
 

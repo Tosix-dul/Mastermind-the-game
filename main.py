@@ -27,10 +27,10 @@ tk.Button(start_window, text="Poziom Łatwy", command=lambda: funkcje.run_level(
 tk.Button(start_window, text="Poziom Średni", command=lambda: funkcje.run_level(2, diff_settings, start_window), width=25).pack(pady=5)
 tk.Button(start_window, text="Poziom Trudny", command=lambda: funkcje.run_level(3, diff_settings, start_window), width=25).pack(pady=5)
 
-tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.stworz_poziom(diff_settings, start_window), width=25).pack(pady=5)
-tk.Button(start_window, text="Customizacja", command=lambda: funkcje.customizacja(), width=25).pack(pady=5)
-tk.Button(start_window, text="Zasady gry", command=lambda: funkcje.zasady_gry(), width=25).pack(pady=5)
-tk.Button(start_window, text="Wyjdź", command=lambda: funkcje.wyjdz(start_window), width=25).pack(pady=10)
+tk.Button(start_window, text="Stwórz swój własny poziom", command=lambda: funkcje.custom_level(diff_settings, start_window), width=25).pack(pady=5)
+tk.Button(start_window, text="Customizacja", command=lambda: funkcje.custom_design(), width=25).pack(pady=5)
+tk.Button(start_window, text="Zasady gry", command=lambda: funkcje.game_rules(), width=25).pack(pady=5)
+tk.Button(start_window, text="Wyjdź", command=lambda: funkcje.leave(start_window), width=25).pack(pady=10)
 
 
 # Start GUI
@@ -75,7 +75,7 @@ buttons =[
 
 
 #szukana sekwencja
-hidden_code_numbers = funkcje.losuj_kod(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
+hidden_code_numbers = funkcje.random_code(diff_settings.number_of_colors_in_sequence, diff_settings.code_length)
 hidden_code_colors = funkcje.rev_input_conv(hidden_code_numbers,buttons)
 
 #-----------------------------Główna pętla programu-------------------------------
