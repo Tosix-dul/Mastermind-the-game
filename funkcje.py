@@ -6,6 +6,7 @@ from PIL import Image, ImageTk, ImageDraw
 import os
 import sys
 
+
 #-------------------------Ustawienia----------------------------
 class Difficulty_Settings:
     def __init__(self, code_length: int,  how_many_tries: int, number_of_colors_in_sequence: int, number_of_colors_on_keypad: int):
@@ -346,6 +347,21 @@ def show_end_screen(result: str,hidden_code):
     else:
         title = "Przegrałeś"
         bg = RED
+
+    # Przycisk
+    button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT - 100, 200, 50)
+
+    running = True
+    while running:
+        screen.fill(bg)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(pygame.mouse.get_pos()):
+                    running = False
         # Tekst główny
         title_surface = font_big.render(title, True, WHITE)
         title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 40))
@@ -360,7 +376,7 @@ def show_end_screen(result: str,hidden_code):
         #Szukany kod
         text = font_small.render("Prawidłowy kod: ", True, WHITE)
         for i in range(len(hidden_code)):
-            hidden_code[i].draw_as_answer(screen,(WIDTH // 2 + 50*i , HEIGHT // 2 + 40))
+            hidden_code[i].draw_as_answer(screen,(WIDTH // 2 + 33*i , HEIGHT // 2 + 40),1.5)
         screen.blit(text, text.get_rect(center=(WIDTH // 2 - 120, HEIGHT // 2 + 40)))
 
 
